@@ -1,591 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="André Agostinho - Psicólogo clínico, sexólogo e músico em São Paulo. Atendimento online e presencial para ansiedade, autoestima, relacionamentos e expressão emocional.">
   <title>André Agostinho — Psicologia com Presença</title>
-  <style>
-    /* ===== BASE RESET & VARIABLES ===== */
-    :root {
-      --bg: #f5f2e1;
-      --text: #2D2D2D;
-      --accent: #374a34;
-      --subtle: #8BA2A5;
-      --white: #FFFFFF;
-      --radius: 12px;
-      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      --shadow: 0 4px 20px rgba(0,0,0,0.04);
-      --spacing-sm: 1rem;
-      --spacing-md: 2rem;
-      --spacing-lg: 3.5rem;
-      --spacing-xl: 5rem;
-    }
-
-    /* ===== DARK MODE OVERRIDE ===== */
-    [data-theme="dark"] {
-      --bg: #1a1916;
-      --text: #e0dcd5;
-      --subtle: #a8b8b9;
-      --white: #1a1916;
-      --accent: #8ba2a5;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-      transition: background-color 0.4s, color 0.4s;
-    }
-    h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
-    a { text-decoration: none; color: inherit; }
-    img { max-width: 100%; height: auto; display: block; }
-    .container { width: min(92%, 1200px); margin-inline: auto; }
-    .section { padding: var(--spacing-lg) 0; }
-
-    /* ===== ANIMATIONS ===== */
-    .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fade-in.appear { opacity: 1; transform: translateY(0); }
-
-    /* ===== NAVIGATION ===== */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.25rem 5%;
-      background: var(--bg);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-      border-bottom: 1px solid rgba(45, 45, 45, 0.03);
-    }
-    .logo { font-weight: 700; font-size: 1.25rem; }
-    .nav-links {
-      display: flex;
-      gap: var(--spacing-sm);
-      font-weight: 500;
-      font-size: 0.95rem;
-    }
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .nav-cta {
-      background: var(--accent);
-      color: var(--white);
-      padding: 0.5rem 1.25rem;
-      border-radius: 30px;
-      font-weight: 600;
-      transition: var(--transition);
-    }
-    .nav-cta:hover { background: #2c3b2a; transform: translateY(-2px); }
-
-    /* ===== THEME TOGGLE ===== */
-    .theme-toggle {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      color: var(--text);
-      transition: var(--transition);
-    }
-    .theme-toggle:hover {
-      background: rgba(0,0,0,0.05);
-    }
-    [data-theme="dark"] .theme-toggle:hover {
-      background: rgba(255,255,255,0.08);
-    }
-
-    /* ===== HAMBURGER MENU ===== */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 30px;
-      height: 21px;
-      cursor: pointer;
-      z-index: 101;
-    }
-    .hamburger span {
-      display: block;
-      height: 3px;
-      width: 100%;
-      background-color: var(--text);
-      border-radius: 2px;
-      transition: var(--transition);
-    }
-    .hamburger span:nth-child(2) { opacity: 1; }
-    .hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-    .hamburger.active span:nth-child(2) { opacity: 0; }
-    .hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
-
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 80%;
-      max-width: 320px;
-      height: 100vh;
-      background: var(--bg);
-      padding: 5rem 2rem 2rem;
-      box-shadow: -5px 0 20px rgba(0,0,0,0.08);
-      z-index: 99;
-      transition: right 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-    .mobile-menu.open {
-      right: 0;
-    }
-    .mobile-menu ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 1.75rem;
-    }
-    .mobile-menu a {
-      font-weight: 500;
-      font-size: 1.1rem;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    [data-theme="light"] .mobile-menu a { border-bottom-color: rgba(0,0,0,0.05); }
-    .mobile-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(2px);
-      opacity: 0;
-      visibility: hidden;
-      z-index: 98;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .mobile-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* ===== HERO SECTION (Estrutura Bento) ===== */
-    .hero-section {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background: var(--bg);
-      padding-top: 100px;
-      position: relative;
-    }
-
-    .hero-header {
-      background: var(--bg);
-      padding: 1rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(45,45,45,0.03);
-    }
-    [data-theme="dark"] .hero-header {
-      border-bottom-color: rgba(255,255,255,0.05);
-    }
-
-    .logo-container {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo-img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin-right: 0.5rem;
-      background: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-weight: bold;
-      font-size: 1.1rem;
-    }
-
-    .nav-menu {
-      display: flex;
-      gap: 1.5rem;
-      font-weight: 500;
-      font-size: 0.95rem;
-    }
-    .nav-menu a {
-      color: var(--text);
-      text-decoration: none;
-      transition: var(--transition);
-    }
-    .nav-menu a:hover {
-      color: var(--accent);
-    }
-
-    .cta-button {
-      background: var(--accent);
-      color: var(--white);
-      padding: 0.5rem 1.25rem;
-      border-radius: 30px;
-      font-weight: 600;
-      transition: var(--transition);
-    }
-    .cta-button:hover {
-      background: #2c3b2a;
-      transform: translateY(-2px);
-    }
-
-    .hero-content-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-lg);
-      padding: var(--spacing-md) 5%;
-      align-items: center;
-    }
-
-    .text-zone {
-      background: var(--white);
-      padding: var(--spacing-md);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border-left: 4px solid var(--accent);
-    }
-
-    .text-zone h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin-bottom: 1rem;
-      max-width: 500px;
-    }
-
-    .text-zone p {
-      font-size: 1.125rem;
-      color: var(--subtle);
-      margin-bottom: var(--spacing-md);
-      max-width: 500px;
-    }
-
-    .badge {
-      background: var(--accent);
-      color: var(--white);
-      padding: 0.3rem 0.9rem;
-      border-radius: 20px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      display: inline-block;
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .hero-ctas {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .btn {
-      padding: 0.85rem 1.75rem;
-      border-radius: var(--radius);
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      font-size: 1rem;
-      transition: var(--transition);
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: var(--white);
-    }
-
-    .btn-primary:hover {
-      background: #2c3b2a;
-      transform: translateY(-3px);
-      box-shadow: var(--shadow);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: var(--accent);
-    }
-
-    .btn-outline:hover {
-      background: rgba(55, 74, 52, 0.06);
-    }
-    [data-theme="dark"] .btn-outline:hover {
-      background: rgba(139, 162, 165, 0.15);
-    }
-
-    .social-metric {
-      color: var(--subtle);
-      font-size: 0.95rem;
-    }
-
-    .image-zone {
-      background: var(--white);
-      padding: var(--spacing-md);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .hero-image {
-      border-radius: var(--radius);
-      max-width: 100%;
-      height: auto;
-      box-shadow: var(--shadow);
-    }
-
-    /* ===== MÚSICA ===== */
-    .music-element {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      font-size: 0.95rem;
-      color: var(--subtle);
-    }
-
-    .music-icon {
-      width: 20px;
-      height: 20px;
-      fill: var(--accent);
-    }
-
-    /* ===== CREDIBILITY LOGOS ===== */
-    .logos {
-      display: flex;
-      justify-content: center;
-      padding: 1.5rem 0;
-      opacity: 0.75;
-      width: 10px;
-      height: auto;
-    }
-    .logo img { max-width: 113px;
-    height: auto;
-    display: block;
-    margin-top: 29px;
-    border-radius: 40px; }
-
-    /* ===== BENEFITS (3 CARDS) ===== */
-    .benefits {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--spacing-md);
-    }
-    .benefit-card {
-      background: var(--white);
-      padding: var(--spacing-md);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-      border-top: 3px solid var(--accent);
-    }
-    .benefit-card:hover { transform: translateY(-6px); }
-    .benefit-card h3 {
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-    }
-
-    /* ===== WHY CHOOSE ===== */
-    .why-choose {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: var(--spacing-lg);
-      box-shadow: var(--shadow);
-    }
-    .why-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-    }
-    .why-item {
-      padding: 0.75rem 0;
-      border-left: 2px solid var(--accent);
-      padding-left: 1rem;
-      color: var(--subtle);
-    }
-
-    /* ===== TESTIMONIALS ===== */
-    .testimonials-slider {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: var(--spacing-md);
-      padding: 1.5rem 0;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .testimonials-slider::-webkit-scrollbar { display: none; }
-    .testimonial-card {
-      scroll-snap-align: start;
-      flex: 0 0 340px;
-      background: var(--white);
-      padding: var(--spacing-md);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: var(--subtle);
-      margin-bottom: 1rem;
-    }
-    .stars { color: #FFB300; margin-bottom: 0.75rem; }
-    .quote { font-style: italic; margin-bottom: 0.75rem; }
-    .author { font-weight: 600; }
-    .affiliation { color: var(--subtle); font-size: 0.9rem; }
-
-    /* ===== FAQ ===== */
-    .faq-item {
-      margin-bottom: 1.25rem;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
-    [data-theme="dark"] .faq-item {
-      border-bottom-color: rgba(255,255,255,0.08);
-    }
-    .faq-question {
-      font-weight: 600;
-      cursor: pointer;
-      padding: 0.75rem 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .faq-answer {
-      padding: 0 0 0.75rem;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, padding 0.4s ease;
-      color: var(--subtle);
-    }
-    .faq-item.active .faq-answer {
-      max-height: 200px;
-      padding: 0 0 0.75rem;
-    }
-
-    /* ===== FINAL CTA ===== */
-    .final-cta {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: var(--spacing-xl) var(--spacing-lg);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-lg);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-    .final-cta::before {
-      content: "";
-      position: absolute;
-      top: 0; right: 0;
-      width: 50%;
-      height: 100%;
-      background: radial-gradient(circle at 90% 20%, rgba(55, 74, 52, 0.06), transparent 70%);
-      z-index: 0;
-      border-radius: var(--radius);
-    }
-    [data-theme="dark"] .final-cta::before {
-      background: radial-gradient(circle at 90% 20%, rgba(139, 162, 165, 0.08), transparent 70%);
-    }
-    .final-cta > * { position: relative; z-index: 1; }
-    .final-cta h2 { margin-bottom: 1.5rem; }
-    .final-cta p { color: var(--subtle); margin-top: 1rem; }
-
-    /* ===== FOOTER ===== */
-    .footer {
-      text-align: center;
-      padding: var(--spacing-md) 0;
-      color: var(--subtle);
-      font-size: 0.95rem;
-    }
-    .footer a {
-      margin: 0 0.6rem;
-      transition: var(--transition);
-    }
-    .footer a:hover { color: var(--accent); }
-
-    /* ===== MOBILE-FIRST RESPONSIVENESS ===== */
-    @media (max-width: 768px) {
-      .hamburger { display: flex; }
-      .nav-links, .nav-cta, .theme-toggle { display: none; }
-
-      .hero-section {
-        padding-top: 120px;
-      }
-
-      .hero-header {
-        flex-direction: column;
-        padding: 1rem 2rem;
-      }
-
-      .nav-menu {
-        margin-top: 1rem;
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      .hero-content-wrapper {
-        grid-template-columns: 1fr;
-        padding: var(--spacing-md) 2rem;
-      }
-
-      .text-zone {
-        padding: var(--spacing-md);
-      }
-
-      .image-zone {
-        padding: var(--spacing-md);
-      }
-
-      .hero-ctas { justify-content: center; flex-wrap: wrap; }
-      .final-cta { grid-template-columns: 1fr; text-align: center; padding: var(--spacing-lg) var(--spacing-sm); }
-      .testimonials-slider { padding: 0 var(--spacing-sm); }
-      h1 { font-size: 2.2rem; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-
-
-  <!-- Hero Section -->
-  <section class="hero-section fade-in">
-    <div class="hero-header">
   <!-- Navigation -->
   <nav class="navbar">
-    <div class="logo"><img src="./img/Logo.jpg" alt="logomarca de Andre Agostinho"></div>
+    <div class="logo">
+      <div class="logo-icon">AA</div>
+      <span>André Agostinho</span>
+    </div>
     <div class="nav-links">
-      <a href="#benefits">Funcionalidades</a>
-      <a href="#benefits">Como Funciona</a>
-      <a href="#why">Por que Nós</a>
-      <a href="#testimonials">Depoimentos</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#faq">FAQ</a>
     </div>
-    <div class="nav-actions">
-      <button id="theme-toggle" class="theme-toggle" aria-label="Alternar modo claro/escuro">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
-      <a href="#book" class="nav-cta">Agendar Diagnóstico</a>
-    </div>
-    
+    <a href="#contato" class="nav-cta">Agendar Sessão</a>
+
     <div class="hamburger" id="hamburger">
       <span></span>
       <span></span>
@@ -597,168 +37,374 @@
   <div class="mobile-overlay" id="mobileOverlay"></div>
   <div class="mobile-menu" id="mobileMenu">
     <ul>
-      <li><a href="#benefits">Funcionalidades</a></li>
-      <li><a href="#benefits">Como Funciona</a></li>
-      <li><a href="#why">Por que Nós</a></li>
-      <li><a href="#testimonials">Depoimentos</a></li>
-      <li><a href="#book" class="mobile-cta">Agendar Diagnóstico</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#depoimentos">Depoimentos</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contato">Agendar Sessão</a></li>
     </ul>
   </div>
 
-    <div class="logo-container">
-        <div class="
-        
-        ">André Agostinho</div>
-      </div>
-        <!-- <div class="nav-menu">
-        <a href="#benefits">Funcionalidades</a>
-        <a href="#why">Por que Nós</a>
-        <a href="#testimonials">Depoimentos</a>
-        <a href="#book" class="cta-button">Agendar Diagnóstico</a>
-      </div> -->
-    </div>
-    <div class="hero-content-wrapper">
-      <div class="text-zone">
-        <span class="badge">+50 vidas impactadas</span>
-        <h1>Cuide da sua mente com quem realmente escuta</h1>
-        <p>Psicólogo clínico, sexólogo e músico em São Paulo. Atendimento online e presencial para ansiedade, autoestima, relacionamentos e expressão emocional através da música.</p>
-        <div class="hero-ctas">
-          <a href="#book" class="btn btn-primary">Agendar Sessão</a>
-          <a href="#faq" class="btn btn-outline">Saiba Mais</a>
-        </div>
-        <div class="social-metric">Mais de +1000 pessoas ouvidas</div>
-        <div class="music-element">
-          <svg class="music-icon" viewBox="0 0 24 24">
-            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-          </svg>
-          <span>Expressão emocional através da música</span>
-        </div>
-      </div>
-      <div class="image-zone">
-        <img src="https://placehold.co/600x700/f5f2e1/374a34?text=André+Agostinho" alt="André em consultório acolhedor" class="hero-image">
-      </div>
-    </div>
-  </section>
-
-  <!-- Credibility -->
-  <div class="logos fade-in">
-    <img src="https://placehold.co/200x60/f5f2e1/2D2D2D?text=Instituto+Hungaro" alt="Instituto Hungaro">
-  </div>
-
-  <!-- Benefits -->
-  <section id="benefits" class="section">
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
-      <h2 class="fade-in" style="text-align: center; margin-bottom: var(--spacing-md);">Como Funciona</h2>
-      <div class="benefits">
-        <div class="benefit-card fade-in">
-          <h3>1. Agende com Flexibilidade</h3>
-          <p>Escolha horário online ou presencial que combine com sua rotina.</p>
+      <div class="hero-grid">
+        <div class="hero-content fade-in">
+          <div class="badge">
+            <span>✨</span>
+            +50 vidas impactadas
+          </div>
+          <h1 class="hero-title">
+            Cuide da sua mente com quem <span class="highlight">realmente escuta</span>
+          </h1>
+          <p class="hero-description">
+            Psicólogo clínico, sexólogo e músico em São Paulo. Atendimento online e presencial para ansiedade,
+            autoestima, relacionamentos e expressão emocional através da música.
+          </p>
+          <div class="hero-ctas">
+            <a href="#contato" class="btn btn-primary">
+              Agendar Sessão
+              <span>→</span>
+            </a>
+            <a href="#sobre" class="btn btn-outline">
+              Saiba Mais
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number">+1000</div>
+              <div class="stat-label">Pessoas ouvidas</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">5+</div>
+              <div class="stat-label">Anos de experiência</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Confidencial</div>
+            </div>
+          </div>
         </div>
-        <div class="benefit-card fade-in">
-          <h3>2. Primeira Conversa sem Compromisso</h3>
-          <p>Sinta se há conexão antes de seguir em frente.</p>
-        </div>
-        <div class="benefit-card fade-in">
-          <h3>3. Ferramentas Reais para o Dia a Dia</h3>
-          <p>Construa relações saudáveis — consigo e com os outros.</p>
+
+        <div class="hero-image-wrapper fade-in fade-in-delay-2">
+          <div class="hero-image-card">
+            <img src="https://placehold.co/600x700/1A1A1A/A8D5BA?text=André+Agostinho" alt="André Agostinho - Psicólogo"
+              class="hero-image">
+            <div class="floating-badge">
+              <div class="floating-badge-icon">🎵</div>
+              <div class="floating-badge-text">
+                <div class="floating-badge-label">Especialidade</div>
+                <div class="floating-badge-value">Musicoterapia</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Why Choose -->
-  <section id="why" class="section">
+  <!-- Services Section -->
+  <section id="servicos" class="section">
     <div class="container">
-      <div class="why-choose fade-in">
-        <h2>Muitas pessoas esperam chegar ao limite. Mas a terapia também é para quem quer:</h2>
-        <div class="why-list">
-          <div class="why-item">Entender por que repete os mesmos erros emocionais</div>
-          <div class="why-item">Parar de se sabotar por medo de não ser “bom o suficiente”</div>
-          <div class="why-item">Lidar com a ansiedade sem se sentir fraco</div>
-          <div class="why-item">Construir relações mais saudáveis — consigo e com os outros</div>
-          <div class="why-item">Ter um espaço seguro, sem julgamentos, para ser quem é</div>
+      <div class="section-header fade-in">
+        <div class="section-subtitle">Como Funciona</div>
+        <h2 class="section-title">Serviços Especializados</h2>
+        <p class="section-description">
+          Atendimento personalizado para suas necessidades emocionais e psicológicas
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="card card-accent fade-in fade-in-delay-1">
+          <div class="card-icon">🧠</div>
+          <h3 class="card-title">Ansiedade & Saúde Mental</h3>
+          <p class="card-description">
+            Técnicas comprovadas para gerenciar ansiedade, estresse e promover bem-estar mental no dia a dia.
+          </p>
+        </div>
+
+        <div class="card card-accent fade-in fade-in-delay-2">
+          <div class="card-icon">💑</div>
+          <h3 class="card-title">Relacionamentos</h3>
+          <p class="card-description">
+            Construa relações mais saudáveis consigo mesmo e com os outros através de autoconhecimento.
+          </p>
+        </div>
+
+        <div class="card card-accent fade-in fade-in-delay-3">
+          <div class="card-icon">🎵</div>
+          <h3 class="card-title">Musicoterapia</h3>
+          <p class="card-description">
+            Expressão emocional através da música, uma abordagem única para processar sentimentos.
+          </p>
+        </div>
+
+        <div class="card card-accent fade-in fade-in-delay-1">
+          <div class="card-icon">⭐</div>
+          <h3 class="card-title">Autoestima</h3>
+          <p class="card-description">
+            Pare de se sabotar e desenvolva uma relação mais positiva e compassiva consigo mesmo.
+          </p>
+        </div>
+
+        <div class="card card-accent fade-in fade-in-delay-2">
+          <div class="card-icon">🌈</div>
+          <h3 class="card-title">Sexologia</h3>
+          <p class="card-description">
+            Atendimento especializado para questões de sexualidade, identidade e relacionamentos íntimos.
+          </p>
+        </div>
+
+        <div class="card card-accent fade-in fade-in-delay-3">
+          <div class="card-icon">🎯</div>
+          <h3 class="card-title">Desenvolvimento Pessoal</h3>
+          <p class="card-description">
+            Ferramentas práticas para crescimento pessoal e alcance de objetivos de vida.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section id="testimonials" class="section">
+  <!-- About Section -->
+  <section id="sobre" class="section">
     <div class="container">
-      <h2 class="fade-in" style="text-align: center; margin-bottom: var(--spacing-md);">Depoimentos</h2>
+      <div class="hero-grid">
+        <div class="fade-in">
+          <div class="section-subtitle">Sobre Mim</div>
+          <h2 class="section-title" style="text-align: left;">Por que escolher terapia?</h2>
+          <p class="hero-description" style="margin-bottom: var(--spacing-lg);">
+            Muitas pessoas esperam chegar ao limite. Mas a terapia também é para quem quer:
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+            <div class="card" style="padding: var(--spacing-lg);">
+              <p class="card-description">✓ Entender por que repete os mesmos erros emocionais</p>
+            </div>
+            <div class="card" style="padding: var(--spacing-lg);">
+              <p class="card-description">✓ Parar de se sabotar por medo de não ser "bom o suficiente"</p>
+            </div>
+            <div class="card" style="padding: var(--spacing-lg);">
+              <p class="card-description">✓ Lidar com a ansiedade sem se sentir fraco</p>
+            </div>
+            <div class="card" style="padding: var(--spacing-lg);">
+              <p class="card-description">✓ Construir relações mais saudáveis — consigo e com os outros</p>
+            </div>
+            <div class="card" style="padding: var(--spacing-lg);">
+              <p class="card-description">✓ Ter um espaço seguro, sem julgamentos, para ser quem é</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-in fade-in-delay-2">
+          <div class="card" style="padding: var(--spacing-xl);">
+            <div class="section-subtitle">Formação</div>
+            <h3 style="margin-bottom: var(--spacing-lg); color: var(--color-primary);">André Agostinho</h3>
+
+            <div
+              style="display: flex; flex-direction: column; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+              <div>
+                <div style="font-weight: 600; margin-bottom: 4px;">🎓 Psicólogo Clínico</div>
+                <div style="color: var(--color-text-tertiary); font-size: 0.875rem;">CRP XX/XXXXX</div>
+              </div>
+              <div>
+                <div style="font-weight: 600; margin-bottom: 4px;">💼 Sexólogo</div>
+                <div style="color: var(--color-text-tertiary); font-size: 0.875rem;">Especialização em Sexualidade
+                  Humana</div>
+              </div>
+              <div>
+                <div style="font-weight: 600; margin-bottom: 4px;">🎵 Músico</div>
+                <div style="color: var(--color-text-tertiary); font-size: 0.875rem;">Musicoterapia e Expressão Emocional
+                </div>
+              </div>
+              <div>
+                <div style="font-weight: 600; margin-bottom: 4px;">🏢 Instituto Húngaro</div>
+                <div style="color: var(--color-text-tertiary); font-size: 0.875rem;">Formação Complementar</div>
+              </div>
+            </div>
+
+            <div class="badge" style="width: 100%; justify-content: center;">
+              Atendimento Online & Presencial em SP
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="depoimentos" class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-subtitle">Depoimentos</div>
+        <h2 class="section-title">O que dizem sobre o atendimento</h2>
+      </div>
+
       <div class="testimonials-slider">
-        <div class="testimonial-card fade-in">
-          <div class="avatar"></div>
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="avatar">M</div>
+            <div class="testimonial-info">
+              <div class="testimonial-name">Maria Santos</div>
+              <div class="testimonial-role">Paciente desde 2023</div>
+            </div>
+          </div>
           <div class="stars">★★★★★</div>
-          <p class="quote">André é um excelente profissional, acolhedor e mantém o ambiente leve!</p>
-          <p class="author">Maria Santos</p>
-          <p class="affiliation">Diretora da TechCorp</p>
+          <p class="testimonial-text">
+            "André é um excelente profissional, acolhedor e mantém o ambiente leve! Me sinto à vontade para falar sobre
+            qualquer assunto."
+          </p>
         </div>
-        <div class="testimonial-card fade-in">
-          <div class="avatar"></div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="avatar">J</div>
+            <div class="testimonial-info">
+              <div class="testimonial-name">João Silva</div>
+              <div class="testimonial-role">Pai de paciente</div>
+            </div>
+          </div>
           <div class="stars">★★★★★</div>
-          <p class="quote">Excelente trabalho que o André faz com meu filho autista!</p>
-          <p class="author">João Silva</p>
-          <p class="affiliation">CEO da LogiPro</p>
+          <p class="testimonial-text">
+            "Excelente trabalho que o André faz com meu filho autista! Vejo evolução a cada sessão e meu filho adora os
+            encontros."
+          </p>
         </div>
-        <div class="testimonial-card fade-in">
-          <div class="avatar"></div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="avatar">C</div>
+            <div class="testimonial-info">
+              <div class="testimonial-name">Carlos Mendes</div>
+              <div class="testimonial-role">Paciente desde 2022</div>
+            </div>
+          </div>
           <div class="stars">★★★★★</div>
-          <p class="quote">Minhas demandas foram perfeitamente sanadas pelo André!</p>
-          <p class="author">Carlos Mendes</p>
-          <p class="affiliation">Diretor da AutoTech</p>
+          <p class="testimonial-text">
+            "Minhas demandas foram perfeitamente sanadas pelo André! Profissional competente e empático que realmente se
+            importa."
+          </p>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="avatar">A</div>
+            <div class="testimonial-info">
+              <div class="testimonial-name">Ana Paula</div>
+              <div class="testimonial-role">Paciente desde 2024</div>
+            </div>
+          </div>
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">
+            "A abordagem com musicoterapia foi transformadora para mim. Consegui expressar emoções que não sabia que
+            existiam."
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- FAQ Section -->
   <section id="faq" class="section">
     <div class="container">
-      <h2 class="fade-in" style="text-align: center; margin-bottom: var(--spacing-md);">Perguntas Frequentes</h2>
+      <div class="section-header fade-in">
+        <div class="section-subtitle">Perguntas Frequentes</div>
+        <h2 class="section-title">Dúvidas Comuns</h2>
+      </div>
+
       <div class="faq-list">
-        <div class="faq-item fade-in">
-          <div class="faq-question" onclick="toggleFAQ(this)">
-            Como funciona o diagnóstico inicial?
-            <span>+</span>
+        <div class="faq-item">
+          <div class="faq-question">
+            Como funciona a primeira sessão?
+            <span class="faq-icon">▼</span>
           </div>
           <div class="faq-answer">
-            Fazemos uma análise completa em 2-3 dias para identificar onde você pode melhorar.
+            A primeira sessão é uma conversa inicial onde nos conhecemos, você compartilha suas demandas e expectativas,
+            e eu explico como funciona o processo terapêutico. É um momento sem compromisso para você sentir se há
+            conexão.
           </div>
         </div>
-        <div class="faq-item fade-in">
-          <div class="faq-question" onclick="toggleFAQ(this)">
-            Quanto tempo demora para implementar?
-            <span>+</span>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Quanto tempo dura cada sessão?
+            <span class="faq-icon">▼</span>
           </div>
           <div class="faq-answer">
-            Normalmente entre 1 e 3 meses, dependendo do tamanho da empresa.
+            Cada sessão tem duração de 50 minutos, seguindo o padrão da psicologia clínica. A frequência é geralmente
+            semanal, mas pode ser ajustada conforme sua necessidade.
           </div>
         </div>
-        <div class="faq-item fade-in">
-          <div class="faq-question" onclick="toggleFAQ(this)">
-            Preciso entender de tecnologia?
-            <span>+</span>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Atende online ou presencial?
+            <span class="faq-icon">▼</span>
           </div>
           <div class="faq-answer">
-            Não! Usamos ferramentas simples e ensinamos tudo para sua equipe.
+            Atendo nas duas modalidades! Online via videochamada (Google Meet ou plataforma de sua preferência) e
+            presencial em consultório em São Paulo. Você escolhe o que funciona melhor para sua rotina.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Como funciona a musicoterapia?
+            <span class="faq-icon">▼</span>
+          </div>
+          <div class="faq-answer">
+            A musicoterapia utiliza a música como ferramenta de expressão emocional e autoconhecimento. Não é necessário
+            saber tocar instrumentos - usamos escuta ativa, criação musical e outras técnicas adaptadas para cada
+            pessoa.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Qual o valor da sessão?
+            <span class="faq-icon">▼</span>
+          </div>
+          <div class="faq-answer">
+            Os valores são informados diretamente via WhatsApp, pois podem variar conforme a modalidade
+            (online/presencial) e frequência. Entre em contato para receber a tabela atualizada.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Aceita convênio?
+            <span class="faq-icon">▼</span>
+          </div>
+          <div class="faq-answer">
+            Atualmente trabalho como particular, mas forneço recibo para reembolso junto ao seu convênio, caso ele
+            ofereça essa opção.
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Final CTA -->
-  <section id="book" class="section">
+  <!-- CTA Section -->
+  <section id="contato" class="section">
     <div class="container">
-      <div class="final-cta fade-in">
-        <div>
-          <h2>Quero minha primeira conversa</h2>
-          <a href="https://wa.me/5511999999999" class="btn btn-primary">Agendar por WhatsApp</a>
-          <p>Sem compromisso. Primeira sessão para você sentir a conexão.</p>
-        </div>
-        <div>
-          <img src="https://placehold.co/280x500/f5f2e1/8BA2A5?text=WhatsApp+Mockup" alt="Agendamento via WhatsApp" style="max-width: 100%;">
+      <div class="cta-section fade-in">
+        <div class="cta-content">
+          <h2 class="cta-title">Pronto para começar sua jornada?</h2>
+          <p class="cta-description">
+            Agende sua primeira conversa sem compromisso. Vamos descobrir juntos como a terapia pode te ajudar.
+          </p>
+          <div style="display: flex; gap: var(--spacing-md); justify-content: center; flex-wrap: wrap;">
+            <a href="https://wa.me/5511999999999?text=Olá! Gostaria de agendar uma sessão." class="btn btn-primary"
+              style="font-size: 1.125rem;">
+              📱 Agendar por WhatsApp
+            </a>
+            <a href="mailto:contato@andreagostinho.com" class="btn btn-outline">
+              ✉️ Enviar E-mail
+            </a>
+          </div>
+          <p style="margin-top: var(--spacing-lg); color: var(--color-text-tertiary); font-size: 0.875rem;">
+            Primeira sessão para você sentir a conexão. Sem compromisso.
+          </p>
         </div>
       </div>
     </div>
@@ -766,52 +412,64 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div>André Agostinho © 2025</div>
-    <div>
-      <a href="#">LinkedIn</a> · 
-      <a href="#">Instagram</a> · 
-      <a href="#">Facebook</a>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>André Agostinho</h3>
+          <p style="color: var(--color-text-secondary); margin-top: var(--spacing-sm);">
+            Psicólogo clínico, sexólogo e músico.<br>
+            CRP XX/XXXXX
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Links Rápidos</h3>
+          <div class="footer-links">
+            <a href="#servicos">Serviços</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#depoimentos">Depoimentos</a>
+            <a href="#faq">FAQ</a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contato</h3>
+          <div class="footer-links">
+            <a href="https://wa.me/5511999999999">WhatsApp</a>
+            <a href="mailto:contato@andreagostinho.com">E-mail</a>
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3>Atendimento</h3>
+          <p style="color: var(--color-text-secondary); margin-top: var(--spacing-sm);">
+            Online (Todo Brasil)<br>
+            Presencial (São Paulo - SP)
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 André Agostinho. Todos os direitos reservados.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Instagram">📷</a>
+          <a href="#" class="social-link" aria-label="LinkedIn">💼</a>
+          <a href="#" class="social-link" aria-label="Facebook">👥</a>
+          <a href="#" class="social-link" aria-label="YouTube">🎥</a>
+        </div>
+      </div>
     </div>
   </footer>
 
   <!-- JavaScript -->
   <script>
-    // Fade-in on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('appear');
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // FAQ Toggle
-    function toggleFAQ(questionEl) {
-      const item = questionEl.closest('.faq-item');
-      item.classList.toggle('active');
-      const sign = questionEl.querySelector('span');
-      sign.textContent = item.classList.contains('active') ? '−' : '+';
-    }
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          closeMobileMenu();
-          window.scrollTo({
-            top: target.offsetTop - 90,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-
-    // Mobile Menu
+    // Mobile Menu Toggle
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileOverlay = document.getElementById('mobileOverlay');
+    const mobileLinks = mobileMenu.querySelectorAll('a');
 
     function openMobileMenu() {
       hamburger.classList.add('active');
@@ -837,48 +495,89 @@
 
     mobileOverlay.addEventListener('click', closeMobileMenu);
 
-    // ===== DARK MODE TOGGLE =====
-    const themeToggle = document.getElementById('theme-toggle');
-    const html = document.documentElement;
-
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    if (savedTheme === 'dark') {
-      html.setAttribute('data-theme', 'dark');
-      updateThemeIcon('sun');
-    }
-
-    themeToggle.addEventListener('click', () => {
-      const isDark = html.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        html.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
-        updateThemeIcon('moon');
-      } else {
-        html.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        updateThemeIcon('sun');
-      }
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
     });
 
-    function updateThemeIcon(type) {
-      const svg = themeToggle.querySelector('svg');
-      if (type === 'sun') {
-        svg.innerHTML = `
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        `;
+    // FAQ Toggle
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+
+        // Toggle current item
+        item.classList.toggle('active');
+      });
+    });
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+
+        e.preventDefault();
+        const target = document.querySelector(href);
+
+        if (target) {
+          const offsetTop = target.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      el.style.opacity = '0';
+      observer.observe(el);
+    });
+
+    // Navbar scroll effect
+    let lastScroll = 0;
+    const navbar = document.querySelector('.navbar');
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > 100) {
+        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+        navbar.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.4)';
       } else {
-        svg.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+        navbar.style.background = 'rgba(10, 10, 10, 0.8)';
+        navbar.style.boxShadow = 'none';
       }
-    }
+
+      lastScroll = currentScroll;
+    });
   </script>
+
 </body>
+
 </html>
