@@ -1,13 +1,249 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
-    content="André Agostinho - Psicólogo clínico, sexólogo e músico em São Paulo. Atendimento online e presencial para ansiedade, autoestima, relacionamentos e expressão emocional.">
-  <title>André Agostinho — Psicologia com Presença</title>
+    content="Estrutura Mente - Clínica de Psicologia, Sexologia e Musicoterapia em São Paulo. Atendimento online e presencial para ansiedade, autoestima, relacionamentos e expressão emocional.">
+  <title>Estrutura Mente — Psicologia com Presença</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilos do Carrossel */
+    .carousel-track {
+      display: grid;
+      grid-template-areas: "stack";
+      width: 100%;
+      height: 100%;
+    }
+    .carousel-item {
+      grid-area: stack;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      width: 100%;
+      height: 100%;
+    }
+    .carousel-item.active {
+      opacity: 1;
+      z-index: 1;
+    }
+    .hero-image {
+      height: 100%;
+    }
+    .carousel-item .floating-badge {
+      opacity: 1;
+      animation: none;
+      z-index: 2;
+    }
+
+    /* Título para o card de imagem do Hero */
+    .image-card-title {
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    /* Estilos do Carrossel de Especialistas */
+    .specialists-slider {
+      display: flex;
+      overflow-x: auto;
+      gap: var(--spacing-md);
+      /* A margem negativa foi removida para evitar que o carrossel quebre o layout.
+         Ele agora respeita o padding do card pai, garantindo a responsividade. */
+      padding-top: var(--spacing-sm); /* Pequeno espaço acima dos cards */
+      padding-bottom: var(--spacing-lg); /* Espaço abaixo para a barra de rolagem */
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-primary) var(--color-bg-tertiary);
+    }
+
+    .specialists-slider::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .specialists-slider::-webkit-scrollbar-track {
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-sm);
+    }
+
+    .specialists-slider::-webkit-scrollbar-thumb {
+      background: var(--color-primary);
+      border-radius: var(--radius-sm);
+    }
+
+    .specialist-card {
+      scroll-snap-align: start;
+      flex: 0 0 280px;
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      border: 1px solid var(--color-border);
+      text-align: center;
+    }
+
+    .specialist-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: var(--radius-full);
+      object-fit: cover;
+      margin: 0 auto var(--spacing-md);
+      border: 3px solid var(--color-primary);
+    }
+
+    .specialist-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .specialist-title {
+      font-size: 0.875rem;
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-md);
+      font-weight: 500;
+    }
+
+    .specialist-bio {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .specialist-card {
+      cursor: pointer;
+      transition: var(--transition-base);
+    }
+
+    .specialist-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary-dark);
+    }
+
+    /* Estilos do Modal de Especialistas */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--color-bg-secondary);
+      padding: var(--spacing-2xl);
+      border-radius: var(--radius-xl);
+      width: min(90%, 600px);
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.95);
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: var(--spacing-md);
+      right: var(--spacing-md);
+      background: var(--color-bg-tertiary);
+      border: none;
+      color: var(--color-text-secondary);
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-base);
+    }
+
+    .modal-close-btn:hover {
+      background: var(--color-primary);
+      color: var(--color-bg-primary);
+      transform: rotate(90deg);
+    }
+
+    .modal-header {
+      display: flex;
+      gap: var(--spacing-lg);
+      align-items: center;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .modal-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: var(--radius-full);
+      object-fit: cover;
+      border: 4px solid var(--color-primary);
+      flex-shrink: 0;
+    }
+
+    .modal-title-group h3 {
+      font-size: 2rem;
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .modal-title-group .specialist-title {
+      font-size: 1.1rem;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .modal-title-group .specialist-crp {
+      font-size: 0.9rem;
+      color: var(--color-text-tertiary);
+    }
+
+    .modal-instagram {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: var(--spacing-sm);
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .modal-instagram:hover {
+      color: #E1306C; /* Cor da marca Instagram */
+    }
+
+    .modal-body p {
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--spacing-md);
+    }
+  </style>
 </head>
 
 <body>
@@ -15,8 +251,8 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="logo">
-      <div class="logo-icon">AA</div>
-      <span>André Agostinho</span>
+      <img src="img/LogoEstruturaMente.jpeg" alt="Estrutura Mente Logo" class="logo-image">
+      <span>Estrutura Mente</span>
     </div>
     <div class="nav-links">
       <a href="#servicos">Serviços</a>
@@ -52,14 +288,14 @@
         <div class="hero-content fade-in">
           <div class="badge">
             <span>✨</span>
-            +50 vidas impactadas
+            +500 vidas impactadas
           </div>
           <h1 class="hero-title">
             Cuide da sua mente com quem <span class="highlight">realmente escuta</span>
           </h1>
           <p class="hero-description">
-            Psicólogo clínico, sexólogo e músico em São Paulo. Atendimento online e presencial para ansiedade,
-            autoestima, relacionamentos e expressão emocional através da música.
+            Clínica de Psicologia, Sexologia e Musicoterapia em São Paulo. Atendimento online e presencial com equipe
+            especializada para ansiedade, autoestima, relacionamentos e expressão emocional.
           </p>
           <div class="hero-ctas">
             <a href="#contato" class="btn btn-primary">
@@ -76,8 +312,8 @@
               <div class="stat-label">Pessoas ouvidas</div>
             </div>
             <div class="stat-item">
-              <div class="stat-number">5+</div>
-              <div class="stat-label">Anos de experiência</div>
+              <div class="stat-number">10+</div>
+              <div class="stat-label">Anos de experiência combinada</div>
             </div>
             <div class="stat-item">
               <div class="stat-number">100%</div>
@@ -85,16 +321,44 @@
             </div>
           </div>
         </div>
-
         <div class="hero-image-wrapper fade-in fade-in-delay-2">
           <div class="hero-image-card">
-            <img src="https://placehold.co/600x700/1A1A1A/A8D5BA?text=André+Agostinho" alt="André Agostinho - Psicólogo"
-              class="hero-image">
-            <div class="floating-badge">
-              <div class="floating-badge-icon">🎵</div>
-              <div class="floating-badge-text">
-                <div class="floating-badge-label">Especialidade</div>
-                <div class="floating-badge-value">Musicoterapia</div>
+            <h3 class="image-card-title">Um Espaço de Acolhimento</h3>
+            <div class="carousel-track">
+              <!-- Item 1 -->
+              <div class="carousel-item active">
+                <img src="https://placehold.co/600x700/1A1A1A/A8D5BA?text=Estrutura+Mente" alt="Equipe Estrutura Mente" class="hero-image">
+                <div class="floating-badge">
+                  <div class="floating-badge-icon">🧠</div>
+                  <div class="floating-badge-text">
+                    <div class="floating-badge-label">Foco</div>
+                    <div class="floating-badge-value">Saúde Mental</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="carousel-item">
+                <img src="https://placehold.co/600x700/2A2A2A/B8E5CA?text=Consultorio" alt="Consultório Acolhedor" class="hero-image">
+                <div class="floating-badge">
+                  <div class="floating-badge-icon">🏢</div>
+                  <div class="floating-badge-text">
+                    <div class="floating-badge-label">Ambiente</div>
+                    <div class="floating-badge-value">Acolhedor</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="carousel-item">
+                <img src="https://placehold.co/600x700/3A3A3A/C8F5DA?text=Musicoterapia" alt="Sala de Musicoterapia" class="hero-image">
+                <div class="floating-badge">
+                  <div class="floating-badge-icon">🎵</div>
+                  <div class="floating-badge-text">
+                    <div class="floating-badge-label">Especialidade</div>
+                    <div class="floating-badge-value">Musicoterapia</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -110,7 +374,7 @@
         <div class="section-subtitle">Como Funciona</div>
         <h2 class="section-title">Serviços Especializados</h2>
         <p class="section-description">
-          Atendimento personalizado para suas necessidades emocionais e psicológicas
+          Atendimento personalizado para suas necessidades emocionais e psicológicas com nossa equipe.
         </p>
       </div>
 
@@ -171,10 +435,10 @@
     <div class="container">
       <div class="hero-grid">
         <div class="fade-in">
-          <div class="section-subtitle">Sobre Mim</div>
-          <h2 class="section-title" style="text-align: left;">Por que escolher terapia?</h2>
+          <div class="section-subtitle">Sobre Nós</div>
+          <h2 class="section-title" style="text-align: left;">Por que escolher a Estrutura Mente?</h2>
           <p class="hero-description" style="margin-bottom: var(--spacing-lg);">
-            Muitas pessoas esperam chegar ao limite. Mas a terapia também é para quem quer:
+            Muitas pessoas esperam chegar ao limite. Mas nossa clínica é para quem quer:
           </p>
 
           <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
@@ -198,29 +462,49 @@
 
         <div class="fade-in fade-in-delay-2">
           <div class="card" style="padding: var(--spacing-xl);">
-            <div class="section-subtitle">Formação</div>
-            <h3 style="margin-bottom: var(--spacing-lg); color: var(--color-primary);">André Agostinho</h3>
+            <div class="section-subtitle">Nossa Equipe</div>
+            <h3 style="color: var(--color-primary); margin-bottom: var(--spacing-md);">Corpo Clínico Multidisciplinar
+            </h3>
 
-            <div
-              style="display: flex; flex-direction: column; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
-              <div>
-                <div style="font-weight: 600; margin-bottom: 4px;">🎓 Psicólogo Clínico</div>
-                <div style="color: var(--color-text-tertiary); font-size: 0.875rem;">CRP XX/XXXXX</div>
+            <!-- Carrossel de Especialistas -->
+            <div class="specialists-slider">
+              <!-- Card Especialista 1 -->
+              <div class="specialist-card"
+                data-photo="https://placehold.co/150x150/A8D5BA/1A1A1A?text=AA"
+                data-name="André Agostinho"
+                data-title="Psicólogo & Musicoterapeuta"
+                data-crp="CRP 06/123456"
+                data-instagram="https://instagram.com"
+                data-bio="André é psicólogo clínico com especialização em Terapia Cognitivo-Comportamental (TCC) e pós-graduação em Musicoterapia. Com mais de 5 anos de experiência, foca no tratamento de transtornos de ansiedade, depressão e questões de relacionamento.
+                
+Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a expressão de emoções e promover o autoconhecimento. Sua abordagem é empática e colaborativa, buscando criar um espaço seguro para o desenvolvimento pessoal de seus pacientes.">
+                <img src="https://placehold.co/100x100/A8D5BA/1A1A1A?text=AA" alt="Foto de André Agostinho"
+                  class="specialist-photo">
+                <div class="specialist-name">André Agostinho</div>
+                <div class="specialist-title">Psicólogo & Musicoterapeuta</div>
+                <p class="specialist-bio">
+                  Especialista em ansiedade e relacionamentos, utiliza a musicoterapia como ferramenta de expressão
+                  emocional. CRP 06/123456.
+                </p>
               </div>
-              <div>
-                <div style="font-weight: 600; margin-bottom: 4px;">💼 Sexólogo</div>
-                <div style="color: var(--color-text-tertiary); font-size: 0.875rem;">Especialização em Sexualidade
-                  Humana</div>
+
+              <!-- Card Especialista 2 -->
+              <div class="specialist-card"
+                data-photo="https://placehold.co/150x150/C8E5D6/1A1A1A?text=BS"
+                data-name="Beatriz Souza"
+                data-title="Sexóloga & Terapeuta de Casal"
+                data-crp="CRP 06/654321"
+                data-instagram="https://instagram.com"
+                data-bio="Beatriz é especialista em Sexualidade Humana pela USP e possui vasta experiência em terapia de casal e individual com foco em disfunções sexuais, questões de identidade de gênero e melhoria da comunicação íntima. Sua metodologia integra técnicas da Terapia Focada nas Emoções (TFE) para ajudar casais e indivíduos a reconstruírem a conexão e a confiança.">
+                <img src="https://placehold.co/100x100/C8E5D6/1A1A1A?text=BS" alt="Foto de Beatriz Souza"
+                  class="specialist-photo">
+                <div class="specialist-name">Beatriz Souza</div>
+                <div class="specialist-title">Sexóloga & Terapeuta de Casal</div>
+                <p class="specialist-bio">
+                  Focada em sexualidade e dinâmica de casais, ajuda a construir intimidade e comunicação saudável.
+                </p>
               </div>
-              <div>
-                <div style="font-weight: 600; margin-bottom: 4px;">🎵 Músico</div>
-                <div style="color: var(--color-text-tertiary); font-size: 0.875rem;">Musicoterapia e Expressão Emocional
-                </div>
-              </div>
-              <div>
-                <div style="font-weight: 600; margin-bottom: 4px;">🏢 Instituto Húngaro</div>
-                <div style="color: var(--color-text-tertiary); font-size: 0.875rem;">Formação Complementar</div>
-              </div>
+              <!-- Para adicionar um novo profissional, copie e cole um bloco 'specialist-card' aqui -->
             </div>
 
             <div class="badge" style="width: 100%; justify-content: center;">
@@ -237,7 +521,7 @@
     <div class="container">
       <div class="section-header fade-in">
         <div class="section-subtitle">Depoimentos</div>
-        <h2 class="section-title">O que dizem sobre o atendimento</h2>
+        <h2 class="section-title">O que dizem sobre nosso atendimento</h2>
       </div>
 
       <div class="testimonials-slider">
@@ -251,7 +535,7 @@
           </div>
           <div class="stars">★★★★★</div>
           <p class="testimonial-text">
-            "André é um excelente profissional, acolhedor e mantém o ambiente leve! Me sinto à vontade para falar sobre
+            "A equipe é excelente, acolhedora e mantém o ambiente leve! Me sinto à vontade para falar sobre
             qualquer assunto."
           </p>
         </div>
@@ -266,7 +550,8 @@
           </div>
           <div class="stars">★★★★★</div>
           <p class="testimonial-text">
-            "Excelente trabalho que o André faz com meu filho autista! Vejo evolução a cada sessão e meu filho adora os
+            "Excelente trabalho que a clínica faz com meu filho autista! Vejo evolução a cada sessão e meu filho adora
+            os
             encontros."
           </p>
         </div>
@@ -281,8 +566,9 @@
           </div>
           <div class="stars">★★★★★</div>
           <p class="testimonial-text">
-            "Minhas demandas foram perfeitamente sanadas pelo André! Profissional competente e empático que realmente se
-            importa."
+            "Minhas demandas foram perfeitamente sanadas pela equipe! Profissionais competentes e empáticos que
+            realmente se
+            importam."
           </p>
         </div>
 
@@ -320,7 +606,7 @@
           </div>
           <div class="faq-answer">
             A primeira sessão é uma conversa inicial onde nos conhecemos, você compartilha suas demandas e expectativas,
-            e eu explico como funciona o processo terapêutico. É um momento sem compromisso para você sentir se há
+            e nós explicamos como funciona o processo terapêutico. É um momento sem compromisso para você sentir se há
             conexão.
           </div>
         </div>
@@ -342,7 +628,7 @@
             <span class="faq-icon">▼</span>
           </div>
           <div class="faq-answer">
-            Atendo nas duas modalidades! Online via videochamada (Google Meet ou plataforma de sua preferência) e
+            Atendemos nas duas modalidades! Online via videochamada (Google Meet ou plataforma de sua preferência) e
             presencial em consultório em São Paulo. Você escolhe o que funciona melhor para sua rotina.
           </div>
         </div>
@@ -376,7 +662,7 @@
             <span class="faq-icon">▼</span>
           </div>
           <div class="faq-answer">
-            Atualmente trabalho como particular, mas forneço recibo para reembolso junto ao seu convênio, caso ele
+            Atualmente trabalhamos como particular, mas fornecemos recibo para reembolso junto ao seu convênio, caso ele
             ofereça essa opção.
           </div>
         </div>
@@ -398,7 +684,7 @@
               style="font-size: 1.125rem;">
               📱 Agendar por WhatsApp
             </a>
-            <a href="mailto:contato@andreagostinho.com" class="btn btn-outline">
+            <a href="mailto:contato@estruturamente.com" class="btn btn-outline">
               ✉️ Enviar E-mail
             </a>
           </div>
@@ -415,10 +701,10 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
-          <h3>André Agostinho</h3>
+          <h3>Estrutura Mente</h3>
           <p style="color: var(--color-text-secondary); margin-top: var(--spacing-sm);">
-            Psicólogo clínico, sexólogo e músico.<br>
-            CRP XX/XXXXX
+            Clínica de Psicologia, Sexologia e Musicoterapia.<br>
+            CRP Ativo
           </p>
         </div>
 
@@ -436,7 +722,7 @@
           <h3>Contato</h3>
           <div class="footer-links">
             <a href="https://wa.me/5511999999999">WhatsApp</a>
-            <a href="mailto:contato@andreagostinho.com">E-mail</a>
+            <a href="mailto:contato@estruturamente.com">E-mail</a>
             <a href="#">Instagram</a>
             <a href="#">LinkedIn</a>
           </div>
@@ -452,7 +738,7 @@
       </div>
 
       <div class="footer-bottom">
-        <p>© 2025 André Agostinho. Todos os direitos reservados.</p>
+        <p>© 2025 Estrutura Mente. Todos os direitos reservados.</p>
         <div class="social-links">
           <a href="#" class="social-link" aria-label="Instagram">📷</a>
           <a href="#" class="social-link" aria-label="LinkedIn">💼</a>
@@ -462,6 +748,13 @@
       </div>
     </div>
   </footer>
+
+  <!-- Specialist Modal -->
+  <div class="modal-overlay" id="specialistModalOverlay">
+    <div class="modal-content" id="specialistModalContent">
+      <!-- Conteúdo do modal será injetado via JavaScript -->
+    </div>
+  </div>
 
   <!-- JavaScript -->
   <script>
@@ -575,6 +868,77 @@
       }
 
       lastScroll = currentScroll;
+    });
+
+    // Lógica do Carrossel Hero
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    let currentImageIndex = 0;
+
+    function rotateCarousel() {
+      if (carouselItems.length <= 1) return;
+      carouselItems[currentImageIndex].classList.remove('active');
+      currentImageIndex = (currentImageIndex + 1) % carouselItems.length;
+      carouselItems[currentImageIndex].classList.add('active');
+    }
+
+    setInterval(rotateCarousel, 4000); // Troca a imagem a cada 4 segundos
+
+    // Lógica do Modal de Especialistas
+    const specialistCards = document.querySelectorAll('.specialist-card');
+    const modalOverlay = document.getElementById('specialistModalOverlay');
+    const modalContent = document.getElementById('specialistModalContent');
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    specialistCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const photo = card.dataset.photo;
+        const name = card.dataset.name;
+        const title = card.dataset.title;
+        const crp = card.dataset.crp;
+        const bio = card.dataset.bio.trim();
+        const instagram = card.dataset.instagram;
+
+        modalContent.innerHTML = `
+          <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+          <div class="modal-header">
+            <img src="${photo}" alt="Foto de ${name}" class="modal-photo">
+            <div class="modal-title-group">
+              <h3>${name}</h3>
+              <div class="specialist-title">${title}</div>
+              <div class="specialist-crp">${crp}</div>
+              ${instagram ? `
+                <a href="${instagram}" target="_blank" rel="noopener noreferrer" class="modal-instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  Instagram
+                </a>` : ''}
+            </div>
+          </div>
+          <div class="modal-body">
+            <p>${bio.replace(/\n/g, '</p><p>')}</p>
+          </div>
+          <a href="#contato" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: var(--spacing-lg);">
+            Agendar com ${name.split(' ')[0]}
+          </a>
+        `;
+
+        modalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+        modalContent.querySelector('.btn-primary').addEventListener('click', closeModal);
+      });
+    });
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        closeModal();
+      }
     });
   </script>
 
