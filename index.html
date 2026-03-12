@@ -5,245 +5,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
-    content="Estrutura Mente - Clínica de Psicologia, Sexologia e Musicoterapia em São Paulo. Atendimento online e presencial para ansiedade, autoestima, relacionamentos e expressão emocional.">
-  <title>Estrutura Mente — Psicologia com Presença</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* Estilos do Carrossel */
-    .carousel-track {
-      display: grid;
-      grid-template-areas: "stack";
-      width: 100%;
-      height: 100%;
-    }
-    .carousel-item {
-      grid-area: stack;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      width: 100%;
-      height: 100%;
-    }
-    .carousel-item.active {
-      opacity: 1;
-      z-index: 1;
-    }
-    .hero-image {
-      height: 100%;
-    }
-    .carousel-item .floating-badge {
-      opacity: 1;
-      animation: none;
-      z-index: 2;
-    }
+    content="Psicólogo em São Paulo e Terapia Online. Especialistas em Psicologia do Esporte, Psicanálise, Saúde Mental e Performance. No Espaço EstruturaMENTE, unimos mente e corpo para resultados sustentáveis.">
+  <meta name="keywords"
+    content="psicólogo são paulo, psicologia do esporte, psicanálise, terapia online ansiedade, performance mental, saúde mental atletas, clínica de psicologia SP">
+  <meta name="author" content="Espaço EstruturaMENTE">
 
-    /* Título para o card de imagem do Hero */
-    .image-card-title {
-      text-align: center;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--color-text-secondary);
-      margin-bottom: var(--spacing-md);
-      padding-bottom: var(--spacing-md);
-      border-bottom: 1px solid var(--color-border);
-    }
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://estruturamente.com.br/">
+  <meta property="og:title" content="Psicólogo em São Paulo | Espaço EstruturaMENTE | Performance e Saúde Mental">
+  <meta property="og:description"
+    content="Terapia presencial e online focada em saúde mental e alta performance. Conheça nossa equipe multidisciplinar.">
+  <meta property="og:image" content="img/LogoEstruturaMente.jpeg">
 
-    /* Estilos do Carrossel de Especialistas */
-    .specialists-slider {
-      display: flex;
-      overflow-x: auto;
-      gap: var(--spacing-md);
-      /* A margem negativa foi removida para evitar que o carrossel quebre o layout.
-         Ele agora respeita o padding do card pai, garantindo a responsividade. */
-      padding-top: var(--spacing-sm); /* Pequeno espaço acima dos cards */
-      padding-bottom: var(--spacing-lg); /* Espaço abaixo para a barra de rolagem */
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: var(--color-primary) var(--color-bg-tertiary);
-    }
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="Psicólogo em São Paulo | Espaço EstruturaMENTE">
+  <meta property="twitter:description" content="Saúde mental, performance e desenvolvimento humano em São Paulo.">
 
-    .specialists-slider::-webkit-scrollbar {
-      height: 8px;
-    }
+  <title>Psicólogo em São Paulo | Espaço EstruturaMENTE | Performance e Saúde Mental</title>
+  <link rel="stylesheet" href="style.css?v=1.1">
 
-    .specialists-slider::-webkit-scrollbar-track {
-      background: var(--color-bg-secondary);
-      border-radius: var(--radius-sm);
+  <!-- Structured Data for Local Business -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalBusiness",
+      "name": "Espaço EstruturaMENTE",
+      "image": "https://estruturamente.com.br/img/LogoEstruturaMente.jpeg",
+      "@id": "",
+      "url": "https://estruturamente.com.br/",
+      "telephone": "+5511971512124",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua da Clínica, 123",
+        "addressLocality": "São Paulo",
+        "addressRegion": "SP",
+        "postalCode": "00000-000",
+        "addressCountry": "BR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -23.55052,
+        "longitude": -46.633308
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "08:00",
+        "closes": "20:00"
+      },
+      "sameAs": [
+        "https://instagram.com/estruturamente"
+      ]
     }
+  </script>
 
-    .specialists-slider::-webkit-scrollbar-thumb {
-      background: var(--color-primary);
-      border-radius: var(--radius-sm);
-    }
-
-    .specialist-card {
-      scroll-snap-align: start;
-      flex: 0 0 280px;
-      background: var(--color-bg-secondary);
-      border-radius: var(--radius-lg);
-      padding: var(--spacing-lg);
-      border: 1px solid var(--color-border);
-      text-align: center;
-    }
-
-    .specialist-photo {
-      width: 100px;
-      height: 100px;
-      border-radius: var(--radius-full);
-      object-fit: cover;
-      margin: 0 auto var(--spacing-md);
-      border: 3px solid var(--color-primary);
-    }
-
-    .specialist-name {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--color-text-primary);
-      margin-bottom: var(--spacing-xs);
-    }
-
-    .specialist-title {
-      font-size: 0.875rem;
-      color: var(--color-primary);
-      margin-bottom: var(--spacing-md);
-      font-weight: 500;
-    }
-
-    .specialist-bio {
-      font-size: 0.9rem;
-      color: var(--color-text-secondary);
-      line-height: 1.5;
-      text-align: left;
-    }
-
-    .specialist-card {
-      cursor: pointer;
-      transition: var(--transition-base);
-    }
-
-    .specialist-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--color-primary-dark);
-    }
-
-    /* Estilos do Modal de Especialistas */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-    }
-
-    .modal-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .modal-content {
-      background: var(--color-bg-secondary);
-      padding: var(--spacing-2xl);
-      border-radius: var(--radius-xl);
-      width: min(90%, 600px);
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-      border: 1px solid var(--color-border);
-      box-shadow: var(--shadow-lg);
-      transform: scale(0.95);
-      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    }
-
-    .modal-overlay.active .modal-content {
-      transform: scale(1);
-    }
-
-    .modal-close-btn {
-      position: absolute;
-      top: var(--spacing-md);
-      right: var(--spacing-md);
-      background: var(--color-bg-tertiary);
-      border: none;
-      color: var(--color-text-secondary);
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-full);
-      cursor: pointer;
-      font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition-base);
-    }
-
-    .modal-close-btn:hover {
-      background: var(--color-primary);
-      color: var(--color-bg-primary);
-      transform: rotate(90deg);
-    }
-
-    .modal-header {
-      display: flex;
-      gap: var(--spacing-lg);
-      align-items: center;
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .modal-photo {
-      width: 120px;
-      height: 120px;
-      border-radius: var(--radius-full);
-      object-fit: cover;
-      border: 4px solid var(--color-primary);
-      flex-shrink: 0;
-    }
-
-    .modal-title-group h3 {
-      font-size: 2rem;
-      color: var(--color-text-primary);
-      margin-bottom: var(--spacing-xs);
-    }
-
-    .modal-title-group .specialist-title {
-      font-size: 1.1rem;
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .modal-title-group .specialist-crp {
-      font-size: 0.9rem;
-      color: var(--color-text-tertiary);
-    }
-
-    .modal-instagram {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: var(--spacing-sm);
-      color: var(--color-text-secondary);
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-    .modal-instagram:hover {
-      color: #E1306C; /* Cor da marca Instagram */
-    }
-
-    .modal-body p {
-      color: var(--color-text-secondary);
-      line-height: 1.7;
-      margin-bottom: var(--spacing-md);
-    }
-  </style>
 </head>
 
 <body>
@@ -256,7 +79,9 @@
     </div>
     <div class="nav-links">
       <a href="#servicos">Serviços</a>
-      <a href="#sobre">Sobre</a>
+      <a href="#ParaQuemÉoEspaço">Sobre</a>
+      <a href="#espaco">Espaço</a>
+      <a href="#diferencial">Diferencial</a>
       <a href="#depoimentos">Depoimentos</a>
       <a href="#faq">FAQ</a>
     </div>
@@ -274,7 +99,9 @@
   <div class="mobile-menu" id="mobileMenu">
     <ul>
       <li><a href="#servicos">Serviços</a></li>
-      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#ParaQuemÉoEspaço">Sobre</a></li>
+      <li><a href="#espaco">Espaço</a></li>
+      <li><a href="#diferencial">Diferencial</a></li>
       <li><a href="#depoimentos">Depoimentos</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#contato">Agendar Sessão</a></li>
@@ -291,18 +118,21 @@
             +500 vidas impactadas
           </div>
           <h1 class="hero-title">
-            Cuide da sua mente com quem <span class="highlight">realmente escuta</span>
+            Espaço<span class="highlight">Estruturamente</span>
           </h1>
+          <h2>
+            Estruture a mente. Sustente seus resultados.
+          </h2>
           <p class="hero-description">
-            Clínica de Psicologia, Sexologia e Musicoterapia em São Paulo. Atendimento online e presencial com equipe
-            especializada para ansiedade, autoestima, relacionamentos e expressão emocional.
+            Um espaço dedicado à saúde mental, desempenho e equilíbrio emocional — para quem busca evolução real e
+            sustentável.
           </p>
           <div class="hero-ctas">
             <a href="#contato" class="btn btn-primary">
-              Agendar Sessão
+              Falar com um profissional
               <span>→</span>
             </a>
-            <a href="#sobre" class="btn btn-outline">
+            <a href="#saude-mental" class="btn btn-outline">
               Saiba Mais
             </a>
           </div>
@@ -327,21 +157,21 @@
             <div class="carousel-track">
               <!-- Item 1 -->
               <div class="carousel-item active">
-                <img src="https://placehold.co/600x700/1A1A1A/A8D5BA?text=Estrutura+Mente" alt="Equipe Estrutura Mente" class="hero-image">
+                <img src="/img/Estruturamente_Andre Atendendo.jpg" alt="Equipe Estrutura Mente" class="hero-image">
                 <div class="floating-badge">
                   <div class="floating-badge-icon">🧠</div>
                   <div class="floating-badge-text">
-                    <div class="floating-badge-label">Foco</div>
-                    <div class="floating-badge-value">Saúde Mental</div>
+                    <div class="floating-badge-label">Atendimento</div>
+                    <div class="floating-badge-value">Presencial e Online</div>
                   </div>
                 </div>
               </div>
 
               <!-- Item 2 -->
               <div class="carousel-item">
-                <img src="https://placehold.co/600x700/2A2A2A/B8E5CA?text=Consultorio" alt="Consultório Acolhedor" class="hero-image">
+                <img src="/img/LogoEstruturaMente.jpeg" alt="Consultório Acolhedor" class="hero-image">
                 <div class="floating-badge">
-                  <div class="floating-badge-icon">🏢</div>
+                  <div class="floating-badge-icon">🛋️</div>
                   <div class="floating-badge-text">
                     <div class="floating-badge-label">Ambiente</div>
                     <div class="floating-badge-value">Acolhedor</div>
@@ -351,12 +181,12 @@
 
               <!-- Item 3 -->
               <div class="carousel-item">
-                <img src="https://placehold.co/600x700/3A3A3A/C8F5DA?text=Musicoterapia" alt="Sala de Musicoterapia" class="hero-image">
+                <img src="/img/Estruturamente_Andre_Poltrona.png" alt="Sala de Musicoterapia" class="hero-image">
                 <div class="floating-badge">
-                  <div class="floating-badge-icon">🎵</div>
+                  <div class="floating-badge-icon">𝚿</div>
                   <div class="floating-badge-text">
                     <div class="floating-badge-label">Especialidade</div>
-                    <div class="floating-badge-value">Musicoterapia</div>
+                    <div class="floating-badge-value">Psicanlista</div>
                   </div>
                 </div>
               </div>
@@ -367,95 +197,176 @@
     </div>
   </section>
 
-  <!-- Services Section -->
+  <!-- Espaço Section -->
+  <section id="espaco" class="section" style="background-color: var(--color-bg-tertiary);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-subtitle">Conheça o</div>
+        <h2 class="section-title">Nosso Espaço</h2>
+        <p class="section-description">
+          Um ambiente projetado para oferecer conforto, privacidade e acolhimento durante sua jornada de cuidado mental.
+        </p>
+      </div>
+
+      <div class="space-gallery fade-in fade-in-delay-1">
+        <div class="gallery-item main">
+          <img src="img/Estruturamente_FachadaClinica.jpeg"
+            alt="Fachada da Clínica de Psicologia em São Paulo - Espaço EstruturaMENTE">
+          <div class="gallery-overlay">
+            <span>Fachada</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="img/Estruturamente_EntradaClinica.jpeg" alt="Recepção acolhedora da clínica de psicologia em SP">
+          <div class="gallery-overlay">
+            <span>Recepção</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="img/Estruturamente_EntradaSala.jpeg" alt="Sala de atendimento psicológico presencial em São Paulo">
+          <div class="gallery-overlay">
+            <span>Consultório</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="img/Estruturamente_Divan.jpeg" alt="Divã para psicanálise e terapia individual">
+          <div class="gallery-overlay">
+            <span>Área de Atendimento</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="saude-mental" class="section saude-mental-sophisticated">
+    <div class="container">
+      <div class="saude-grid">
+        <div class="saude-content fade-in">
+          <div class="section-subtitle">Mindset & Equilíbrio</div>
+          <h2 class="saude-title">Saúde mental não é luxo. <span class="highlight">É estrutura.</span></h2>
+          <p class="saude-lead">
+            Cuidar da saúde mental é investir em decisões melhores, relações mais saudáveis e desempenho consistente.
+          </p>
+          <div class="saude-text">
+            <p>
+              Ansiedade, estresse e bloqueios emocionais impactam diretamente sua qualidade de vida. Ignorá-los cobra um
+              preço alto em todas as áreas.
+            </p>
+            <p>
+              No <strong>Espaço EstruturaMENTE</strong>, oferecemos um trabalho sério, profundo e responsável, focado na
+              sua <strong>evolução real e sustentável</strong>.
+            </p>
+          </div>
+          <div class="cta-mini">
+            <a href="#contato" class="btn-text">Começar minha evolução <span>→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Servicos Section -->
   <section id="servicos" class="section">
     <div class="container">
       <div class="section-header fade-in">
         <div class="section-subtitle">Como Funciona</div>
-        <h2 class="section-title">Serviços Especializados</h2>
+        <h2 class="section-title">Nossas áreas de atuação</h2>
         <p class="section-description">
-          Atendimento personalizado para suas necessidades emocionais e psicológicas com nossa equipe.
+          Atendimento personalizado para suas necessidades emocionais, psicológicas e corporais com nossa equipe.
         </p>
       </div>
 
       <div class="services-grid">
         <div class="card card-accent fade-in fade-in-delay-1">
           <div class="card-icon">🧠</div>
-          <h3 class="card-title">Ansiedade & Saúde Mental</h3>
+          <h3 class="card-title">Psicanálise Clínica</h3>
           <p class="card-description">
-            Técnicas comprovadas para gerenciar ansiedade, estresse e promover bem-estar mental no dia a dia.
+            Atendimento individual com foco em autoconhecimento, estrutura emocional e compreensão profunda dos
+            conflitos psíquicos.
           </p>
         </div>
 
         <div class="card card-accent fade-in fade-in-delay-2">
-          <div class="card-icon">💑</div>
-          <h3 class="card-title">Relacionamentos</h3>
+          <div class="card-icon">🏆</div>
+          <h3 class="card-title">Psicologia do Esporte</h3>
           <p class="card-description">
-            Construa relações mais saudáveis consigo mesmo e com os outros através de autoconhecimento.
+            Trabalho voltado para atletas e praticantes que buscam melhora de performance, controle emocional, foco e
+            constância.
           </p>
         </div>
 
         <div class="card card-accent fade-in fade-in-delay-3">
-          <div class="card-icon">🎵</div>
-          <h3 class="card-title">Musicoterapia</h3>
+          <div class="card-icon">❤️</div>
+          <h3 class="card-title">Sexualidade e Relações</h3>
           <p class="card-description">
-            Expressão emocional através da música, uma abordagem única para processar sentimentos.
+            Escuta e orientação sobre questões relacionadas à sexualidade, relacionamentos, desejo, bloqueios e
+            identidade.
           </p>
         </div>
 
         <div class="card card-accent fade-in fade-in-delay-1">
-          <div class="card-icon">⭐</div>
-          <h3 class="card-title">Autoestima</h3>
+          <div class="card-icon">💪🏻</div>
+          <h3 class="card-title">Personal trainer</h3>
           <p class="card-description">
-            Pare de se sabotar e desenvolva uma relação mais positiva e compassiva consigo mesmo.
+            Treinos e acompanhamento personalizado para seu desempenho/estilo de vida.
           </p>
         </div>
 
         <div class="card card-accent fade-in fade-in-delay-2">
-          <div class="card-icon">🌈</div>
-          <h3 class="card-title">Sexologia</h3>
+          <div class="card-icon">🥘</div>
+          <h3 class="card-title">Nutricionista</h3>
           <p class="card-description">
-            Atendimento especializado para questões de sexualidade, identidade e relacionamentos íntimos.
+            As dietas necessárias para nutrir o corpo e a mente.
           </p>
         </div>
 
         <div class="card card-accent fade-in fade-in-delay-3">
-          <div class="card-icon">🎯</div>
-          <h3 class="card-title">Desenvolvimento Pessoal</h3>
+          <div class="card-icon">👩🏼‍⚕️</div>
+          <h3 class="card-title">Fisioterapia</h3>
           <p class="card-description">
-            Ferramentas práticas para crescimento pessoal e alcance de objetivos de vida.
+            Para pacientes com casos especiais que necessitam de uma maior demanda de atenção.
+          </p>
+        </div>
+
+        <div class="card card-accent fade-in fade-in-delay-3">
+          <div class="card-icon">👥</div>
+          <h3 class="card-title">Atendimento Individualizado</h3>
+          <p class="card-description">
+            Cada processo é único. Não trabalhamos com fórmulas prontas.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- About Section -->
-  <section id="sobre" class="section">
+  <!-- Sobre Section -->
+  <section id="ParaQuemÉoEspaço" class="section">
     <div class="container">
       <div class="hero-grid">
         <div class="fade-in">
-          <div class="section-subtitle">Sobre Nós</div>
-          <h2 class="section-title" style="text-align: left;">Por que escolher a Estrutura Mente?</h2>
+          <div class="section-subtitle">Para quem é </div>
+          <h2 class="section-title" style="text-align: left;">O Espaço EstruturaMENTE?</h2>
           <p class="hero-description" style="margin-bottom: var(--spacing-lg);">
             Muitas pessoas esperam chegar ao limite. Mas nossa clínica é para quem quer:
           </p>
 
           <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
             <div class="card" style="padding: var(--spacing-lg);">
-              <p class="card-description">✓ Entender por que repete os mesmos erros emocionais</p>
+              <p class="card-description">✓ Pessoas que querem se conhecer melhor</p>
             </div>
             <div class="card" style="padding: var(--spacing-lg);">
-              <p class="card-description">✓ Parar de se sabotar por medo de não ser "bom o suficiente"</p>
+              <p class="card-description">✓ Atletas que buscam vantagem mental"</p>
             </div>
             <div class="card" style="padding: var(--spacing-lg);">
-              <p class="card-description">✓ Lidar com a ansiedade sem se sentir fraco</p>
+              <p class="card-description">✓ Profissionais sob pressão constante</p>
             </div>
             <div class="card" style="padding: var(--spacing-lg);">
-              <p class="card-description">✓ Construir relações mais saudáveis — consigo e com os outros</p>
+              <p class="card-description">✓ Quem sente que “travou” emocionalmente</p>
             </div>
             <div class="card" style="padding: var(--spacing-lg);">
-              <p class="card-description">✓ Ter um espaço seguro, sem julgamentos, para ser quem é</p>
+              <p class="card-description">✓ Quem quer sustentar resultados sem se adoecer</p>
             </div>
           </div>
         </div>
@@ -463,20 +374,18 @@
         <div class="fade-in fade-in-delay-2">
           <div class="card" style="padding: var(--spacing-xl);">
             <div class="section-subtitle">Nossa Equipe</div>
-            <h3 style="color: var(--color-primary); margin-bottom: var(--spacing-md);">Corpo Clínico Multidisciplinar
+            <h3 style="color: var(--color-primary); margin-bottom: var(--spacing-md);">
+              O Espaço EstruturaMENTE reúne profissionais comprometidos com a saúde mental, o desenvolvimento humano e o
+              desempenho sustentável.
             </h3>
 
             <!-- Carrossel de Especialistas -->
             <div class="specialists-slider">
               <!-- Card Especialista 1 -->
-              <div class="specialist-card"
-                data-photo="https://placehold.co/150x150/A8D5BA/1A1A1A?text=AA"
-                data-name="André Agostinho"
-                data-title="Psicólogo & Musicoterapeuta"
-                data-crp="CRP 06/123456"
+              <div class="specialist-card" data-photo="https://placehold.co/150x150/A8D5BA/1A1A1A?text=AA"
+                data-name="André Agostinho" data-title="Psicólogo & Musicoterapeuta" data-crp="CRP 06/123456"
                 data-instagram="https://instagram.com"
-                data-bio="André é psicólogo clínico com especialização em Terapia Cognitivo-Comportamental (TCC) e pós-graduação em Musicoterapia. Com mais de 5 anos de experiência, foca no tratamento de transtornos de ansiedade, depressão e questões de relacionamento.
-                
+                data-bio="André é psicólogo clínico com especialização em Terapia Cognitivo-Comportamental (TCC) e pós-graduação em Musicoterapia. Com mais de 5 anos de experiência, foca no tratamento de transtornos de ansiedade, depressão e questões de relacionamento. 
 Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a expressão de emoções e promover o autoconhecimento. Sua abordagem é empática e colaborativa, buscando criar um espaço seguro para o desenvolvimento pessoal de seus pacientes.">
                 <img src="https://placehold.co/100x100/A8D5BA/1A1A1A?text=AA" alt="Foto de André Agostinho"
                   class="specialist-photo">
@@ -489,11 +398,8 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
               </div>
 
               <!-- Card Especialista 2 -->
-              <div class="specialist-card"
-                data-photo="https://placehold.co/150x150/C8E5D6/1A1A1A?text=BS"
-                data-name="Beatriz Souza"
-                data-title="Sexóloga & Terapeuta de Casal"
-                data-crp="CRP 06/654321"
+              <div class="specialist-card" data-photo="https://placehold.co/150x150/C8E5D6/1A1A1A?text=BS"
+                data-name="Beatriz Souza" data-title="Sexóloga & Terapeuta de Casal" data-crp="CRP 06/654321"
                 data-instagram="https://instagram.com"
                 data-bio="Beatriz é especialista em Sexualidade Humana pela USP e possui vasta experiência em terapia de casal e individual com foco em disfunções sexuais, questões de identidade de gênero e melhoria da comunicação íntima. Sua metodologia integra técnicas da Terapia Focada nas Emoções (TFE) para ajudar casais e indivíduos a reconstruírem a conexão e a confiança.">
                 <img src="https://placehold.co/100x100/C8E5D6/1A1A1A?text=BS" alt="Foto de Beatriz Souza"
@@ -507,8 +413,37 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
               <!-- Para adicionar um novo profissional, copie e cole um bloco 'specialist-card' aqui -->
             </div>
 
-            <div class="badge" style="width: 100%; justify-content: center;">
-              Atendimento Online & Presencial em SP
+  </section>
+
+  <!-- Diferencial Section -->
+  <section id="diferencial" class="section diferencial-sophisticated">
+    <div class="container">
+      <div class="diferencial-header fade-in">
+        <div class="section-subtitle">Nossos Valores</div>
+        <h2 class="section-title">Nosso Diferencial</h2>
+      </div>
+
+      <div class="diferencial-main-content fade-in">
+        <div class="diferencial-hero-text">
+          <p class="highlight-text">
+            Aqui, o foco não é apagar sintomas rapidamente, mas <strong>estruturar a mente</strong> para sustentar
+            mudanças reais.
+          </p>
+          <div class="diferencial-details">
+            <p>O trabalho é baseado em escuta ativa, ética profissional e integração entre teoria, prática e realidade
+              de vida.</p>
+          </div>
+        </div>
+
+        <div class="diferencial-philosophy">
+          <div class="philosophy-item negative">
+            <div class="philosophy-content">
+              <h3>Sem promessas mágicas. <span class="break">Sem atalhos.</span></h3>
+            </div>
+          </div>
+          <div class="philosophy-item positive">
+            <div class="philosophy-content">
+              <h3>Com profundidade, <span class="break">responsabilidade e compromisso.</span></h3>
             </div>
           </div>
         </div>
@@ -516,7 +451,9 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
     </div>
   </section>
 
-  <!-- Testimonials Section -->
+
+
+  <!-- Depoimentos Section -->
   <section id="depoimentos" class="section">
     <div class="container">
       <div class="section-header fade-in">
@@ -590,7 +527,7 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
     </div>
   </section>
 
-  <!-- Partners Section -->
+  <!-- Parceiros Section -->
   <section id="parceiros" class="section">
     <div class="container">
       <div class="section-header fade-in">
@@ -620,7 +557,8 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
 
         <!-- Partner 3 -->
         <div class="partner-card fade-in fade-in-delay-2">
-          <img src="https://placehold.co/150x150/E6F4EC/1A1A1A?text=Academia" alt="Logo Academia X" class="partner-logo">
+          <img src="https://placehold.co/150x150/E6F4EC/1A1A1A?text=Academia" alt="Logo Academia X"
+            class="partner-logo">
           <h3 class="partner-name">Academia X</h3>
           <div class="partner-discount">Isenção</div>
           <p class="partner-description">De matrícula para planos anuais e semestrais.</p>
@@ -636,6 +574,7 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
       </div>
     </div>
   </section>
+
 
   <!-- FAQ Section -->
   <section id="faq" class="section">
@@ -722,18 +661,18 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
     <div class="container">
       <div class="cta-section fade-in">
         <div class="cta-content">
-          <h2 class="cta-title">Pronto para começar sua jornada?</h2>
+          <h2 class="cta-title">Pronto para estruturar sua mente?</h2>
           <p class="cta-description">
-            Agende sua primeira conversa sem compromisso. Vamos descobrir juntos como a terapia pode te ajudar.
+            Dar o primeiro passo é um ato de responsabilidade com você mesmo.
           </p>
           <div style="display: flex; gap: var(--spacing-md); justify-content: center; flex-wrap: wrap;">
-            <a href="https://wa.me/5511999999999?text=Olá! Gostaria de agendar uma sessão." class="btn btn-primary"
+            <a href="https://wa.me/5511971512124?text=Olá! Gostaria de agendar uma sessão." class="btn btn-primary"
               style="font-size: 1.125rem;">
               📱 Agendar por WhatsApp
             </a>
-            <a href="mailto:contato@estruturamente.com" class="btn btn-outline">
+            <!--  <a href="mailto:contato@estruturamente.com" class="btn btn-outline">
               ✉️ Enviar E-mail
-            </a>
+            </a> -->
           </div>
           <p style="margin-top: var(--spacing-lg); color: var(--color-text-tertiary); font-size: 0.875rem;">
             Primeira sessão para você sentir a conexão. Sem compromisso.
@@ -750,7 +689,7 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
         <div class="footer-section">
           <h3>Estrutura Mente</h3>
           <p style="color: var(--color-text-secondary); margin-top: var(--spacing-sm);">
-            Clínica de Psicologia, Sexologia e Musicoterapia.<br>
+            Saúde mental, performance, desenvolvimento humano e nutrição<br>
             CRP Ativo
           </p>
         </div>
@@ -759,16 +698,19 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
           <h3>Links Rápidos</h3>
           <div class="footer-links">
             <a href="#servicos">Serviços</a>
-            <a href="#sobre">Sobre</a>
+            <a href="#ParaQuemÉoEspaço">Sobre</a>
+            <a href="#espaco">Espaço</a>
+            <a href="#diferencial">Diferencial</a>
             <a href="#depoimentos">Depoimentos</a>
             <a href="#faq">FAQ</a>
+
           </div>
         </div>
 
         <div class="footer-section">
           <h3>Contato</h3>
           <div class="footer-links">
-            <a href="https://wa.me/5511999999999">WhatsApp</a>
+            <a href="https://wa.me/5511971512124?text=Olá! Gostaria de agendar uma sessão.">WhatsApp</a>
             <a href="mailto:contato@estruturamente.com">E-mail</a>
             <a href="#">Instagram</a>
             <a href="#">LinkedIn</a>
@@ -776,16 +718,28 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
         </div>
 
         <div class="footer-section">
-          <h3>Atendimento</h3>
-          <p style="color: var(--color-text-secondary); margin-top: var(--spacing-sm);">
-            Online (Todo Brasil)<br>
-            Presencial (São Paulo - SP)
+          <h3>Localização</h3>
+          <p
+            style="color: var(--color-text-secondary); margin-top: var(--spacing-sm); margin-bottom: var(--spacing-md);">
+            Rua da Clínica, 123 - Sala 45<br>
+            Bairro Exemplo, São Paulo - SP<br>
+            CEP: 00000-000
           </p>
+          <div class="footer-map-container">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1975!2d-46.6623!3d-23.5614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da563bb1%3A0x1d3a52f41b392a0e!2sAv.%20Paulista%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
+              allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
         </div>
       </div>
 
       <div class="footer-bottom">
         <p>© 2025 Estrutura Mente. Todos os direitos reservados.</p>
+        <p style="margin-top: 5px; font-size: 0.8rem; opacity: 0.8;">
+          Desenvolvido com ☕ <a href="http://www.dotincbr.com.br" target="_blank"
+            style="color: inherit; text-decoration: underline;">dotincbr.com.br</a>
+        </p>
         <div class="social-links">
           <a href="#" class="social-link" aria-label="Instagram">📷</a>
           <a href="#" class="social-link" aria-label="LinkedIn">💼</a>
@@ -803,191 +757,30 @@ Utiliza a música como uma poderosa ferramenta terapêutica para facilitar a exp
     </div>
   </div>
 
-  <!-- JavaScript -->
-  <script>
-    // Mobile Menu Toggle
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileOverlay = document.getElementById('mobileOverlay');
-    const mobileLinks = mobileMenu.querySelectorAll('a');
+  <!-- Lightbox Carousel Modal -->
+  <div class="modal-overlay" id="lightboxModal">
+    <div class="lightbox-content">
+      <button class="modal-close-btn lightbox-close" id="closeLightbox">&times;</button>
+      <button class="lightbox-nav-btn prev" id="prevImage">‹</button>
+      <div class="lightbox-image-container">
+        <img src="" alt="" id="lightboxImage">
+      </div>
+      <button class="lightbox-nav-btn next" id="nextImage">›</button>
+      <div class="lightbox-counter"><span id="currentImageNum">1</span> / <span id="totalImagesNum">1</span></div>
+    </div>
+  </div>
 
-    function openMobileMenu() {
-      hamburger.classList.add('active');
-      mobileMenu.classList.add('open');
-      mobileOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/5511971512124?text=Olá! Gostaria de agendar uma sessão." class="whatsapp-float" target="_blank"
+    id="whatsappFloat">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+    </svg>
+  </a>
 
-    function closeMobileMenu() {
-      hamburger.classList.remove('active');
-      mobileMenu.classList.remove('open');
-      mobileOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+  <script src="script.js" defer></script>
 
-    hamburger.addEventListener('click', () => {
-      if (mobileMenu.classList.contains('open')) {
-        closeMobileMenu();
-      } else {
-        openMobileMenu();
-      }
-    });
-
-    mobileOverlay.addEventListener('click', closeMobileMenu);
-
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', closeMobileMenu);
-    });
-
-    // FAQ Toggle
-    const faqItems = document.querySelectorAll('.faq-item');
-
-    faqItems.forEach(item => {
-      const question = item.querySelector('.faq-question');
-
-      question.addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
-
-        // Close all other items
-        faqItems.forEach(otherItem => {
-          if (otherItem !== item) {
-            otherItem.classList.remove('active');
-          }
-        });
-
-        // Toggle current item
-        item.classList.toggle('active');
-      });
-    });
-
-    // Smooth Scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href === '#') return;
-
-        e.preventDefault();
-        const target = document.querySelector(href);
-
-        if (target) {
-          const offsetTop = target.offsetTop - 80;
-          window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-
-    // Intersection Observer for fade-in animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in').forEach(el => {
-      el.style.opacity = '0';
-      observer.observe(el);
-    });
-
-    // Navbar scroll effect
-    let lastScroll = 0;
-    const navbar = document.querySelector('.navbar');
-
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.pageYOffset;
-
-      if (currentScroll > 100) {
-        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
-        navbar.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.4)';
-      } else {
-        navbar.style.background = 'rgba(10, 10, 10, 0.8)';
-        navbar.style.boxShadow = 'none';
-      }
-
-      lastScroll = currentScroll;
-    });
-
-    // Lógica do Carrossel Hero
-    const carouselItems = document.querySelectorAll('.carousel-item');
-    let currentImageIndex = 0;
-
-    function rotateCarousel() {
-      if (carouselItems.length <= 1) return;
-      carouselItems[currentImageIndex].classList.remove('active');
-      currentImageIndex = (currentImageIndex + 1) % carouselItems.length;
-      carouselItems[currentImageIndex].classList.add('active');
-    }
-
-    setInterval(rotateCarousel, 4000); // Troca a imagem a cada 4 segundos
-
-    // Lógica do Modal de Especialistas
-    const specialistCards = document.querySelectorAll('.specialist-card');
-    const modalOverlay = document.getElementById('specialistModalOverlay');
-    const modalContent = document.getElementById('specialistModalContent');
-
-    function closeModal() {
-      modalOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    specialistCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const photo = card.dataset.photo;
-        const name = card.dataset.name;
-        const title = card.dataset.title;
-        const crp = card.dataset.crp;
-        const bio = card.dataset.bio.trim();
-        const instagram = card.dataset.instagram;
-
-        modalContent.innerHTML = `
-          <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
-          <div class="modal-header">
-            <img src="${photo}" alt="Foto de ${name}" class="modal-photo">
-            <div class="modal-title-group">
-              <h3>${name}</h3>
-              <div class="specialist-title">${title}</div>
-              <div class="specialist-crp">${crp}</div>
-              ${instagram ? `
-                <a href="${instagram}" target="_blank" rel="noopener noreferrer" class="modal-instagram">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                  </svg>
-                  Instagram
-                </a>` : ''}
-            </div>
-          </div>
-          <div class="modal-body">
-            <p>${bio.replace(/\n/g, '</p><p>')}</p>
-          </div>
-          <a href="#contato" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: var(--spacing-lg);">
-            Agendar com ${name.split(' ')[0]}
-          </a>
-        `;
-
-        modalOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-
-        document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
-        modalContent.querySelector('.btn-primary').addEventListener('click', closeModal);
-      });
-    });
-
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) {
-        closeModal();
-      }
-    });
-  </script>
 
 </body>
 
