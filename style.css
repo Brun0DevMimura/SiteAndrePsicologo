@@ -92,7 +92,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* Adicionando a imagem de fundo com um overlay para legibilidade */
-  background-image: linear-gradient(rgba(255, 255, 255, 0.80), rgba(255, 255, 255, 1.0)), url('img/LogoEstruturaMente.jpeg');
+  background-image: linear-gradient(rgba(255, 255, 255, 0.80), rgba(255, 255, 255, 1.0)), url('./img/LogoEstruturaMente.jpeg');
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
