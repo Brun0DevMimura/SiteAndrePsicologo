@@ -112,17 +112,15 @@ window.addEventListener('scroll', () => {
     const progress = (currentScroll / totalHeight) * 100;
     
     if (scrollProgress) scrollProgress.style.width = `${progress}%`;
+    
     if (navbar) {
         if (currentScroll > 50) navbar.classList.add('scrolled');
         else navbar.classList.remove('scrolled');
     }
 
-    if (logoImage) {
-        // Rotate logo based on scroll percentage (720 degrees total)
-        // This ensures it returns to 0 degrees at the very bottom
-        const rotation = (currentScroll / totalHeight) * 720; 
-        logoImage.style.transform = `rotate(${rotation}deg)`;
-    }
+    // Logo Rotation via CSS Variable
+    const rotation = (currentScroll / totalHeight) * 720;
+    document.documentElement.style.setProperty('--logo-rotate', `${rotation}deg`);
 
     if (bgParallax) {
         const scale = 1 + (currentScroll / 5000);
@@ -298,22 +296,27 @@ function initTypewriter() {
                     if (i < text.length) {
                         el.innerHTML += text.charAt(i);
                         i++;
-                        setTimeout(type, 100);
+                        setTimeout(type, 70);
                     }
                 }
                 type();
                 typeObserver.unobserve(el);
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.1 });
 
     typewriterElements.forEach(el => typeObserver.observe(el));
 }
 
 // Initial Run
 document.addEventListener('DOMContentLoaded', () => {
-    initKineticTypography();
-    initAutoScrollSpecialists();
-    initLightbox();
-    initTypewriter();
+    // Independent initializations to prevent one failing from stopping others
+    const runSafe = (fn) => {
+        try { fn(); } catch (e) { console.error('Init Error:', e); }
+    };
+
+    runSafe(initKineticTypography);
+    runSafe(initAutoScrollSpecialists);
+    runSafe(initLightbox);
+    runSafe(initTypewriter);
 });

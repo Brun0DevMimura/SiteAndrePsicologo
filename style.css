@@ -371,6 +371,7 @@ img {
   height: 40px;
   border-radius: var(--radius-full);
   object-fit: cover;
+  transform: rotate(var(--logo-rotate, 0deg));
   will-change: transform;
 }
 
@@ -1617,7 +1618,9 @@ img {
   transition: var(--transition-base);
   background: linear-gradient(90deg, var(--color-primary) 0%, #fff 50%, var(--color-primary) 100%);
   background-size: 200% auto;
+  background-clip: text;
   -webkit-background-clip: text;
+  color: transparent; /* Fallback for older browsers */
   -webkit-text-fill-color: transparent;
   animation: text-shimmer 3s infinite linear;
 }
