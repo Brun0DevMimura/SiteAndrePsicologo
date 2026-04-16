@@ -24,7 +24,7 @@
   <meta property="twitter:description" content="Saúde mental, performance e desenvolvimento humano em São Paulo.">
 
   <title>Psicólogo em Ribeirão Pires | Espaço EstruturaMENTE | Performance e Saúde Mental</title>
-  <link rel="stylesheet" href="style.css?v=1.2">
+  <link rel="stylesheet" href="style.css?v=2.0">
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
 
   <!-- Structured Data for Local Business -->
@@ -770,7 +770,21 @@
     </svg>
   </a>
 
-  <script src="main.js" defer></script>
+  <script>
+    // Critical Preloader Logic (Inlined for reliability)
+    (function() {
+      const handleLoading = () => {
+        const preloader = document.getElementById('preloader');
+        if (preloader && !preloader.classList.contains('loaded')) {
+          preloader.classList.add('loaded');
+          if (typeof initAnimations === 'function') initAnimations();
+        }
+      };
+      window.addEventListener('load', () => setTimeout(handleLoading, 1000));
+      setTimeout(handleLoading, 4000); // Fail-safe
+    })();
+  </script>
+  <script src="main.js?v=2.0" defer></script>
 
 
 </body>
