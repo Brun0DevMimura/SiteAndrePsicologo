@@ -74,7 +74,9 @@ const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('appear');
-            observer.unobserve(entry.target);
+        } else {
+            // Remove appear class when it leaves the viewport (making it cyclic)
+            entry.target.classList.remove('appear');
         }
     });
 }, observerOptions);
@@ -174,13 +176,57 @@ function initKineticTypography() {
     });
 }
 
+// Auto-scroll especialistas
+function initAutoScrollSpecialists() {
+    const slider = document.querySelector('.specialists-slider');
+    if (!slider) return;
+
+    let isHovering = false;
+    let scrollDirection = 1;
+
+    slider.addEventListener('mouseenter', () => isHovering = true);
+    slider.addEventListener('mouseleave', () => isHovering = false);
+    slider.addEventListener('touchstart', () => isHovering = true);
+    slider.addEventListener('touchend', () => isHovering = false);
+
+    setInterval(() => {
+        if (isHovering) return;
+
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        const cardWidth = slider.querySelector('.specialist-card').offsetWidth + 16; // width + gap
+        
+        if (slider.scrollLeft >= maxScroll - 10) {
+            slider.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+            slider.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+    }, 4000);
+}
+
 // Initial Run
 document.addEventListener('DOMContentLoaded', () => {
     initKineticTypography();
-    initAnimations();
+    initAutoScrollSpecialists();
 });
 
-// Last Resort: ensure things show up
-window.onload = () => {
-    document.querySelectorAll('.fade-in, .gallery-item, .hero-title').forEach(el => el.classList.add('appear'));
-};
+// Preloader Handler
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        // Delay slightly for visual effect
+        setTimeout(() => {
+            preloader.classList.add('loaded');
+            // Allow animations to start after preloader is gone
+            initAnimations();
+        }, 1200);
+    }
+});
+
+// Fallback: ensure things show up if load event takes too long
+setTimeout(() => {
+    const preloader = document.getElementById('preloader');
+    if (preloader && !preloader.classList.contains('loaded')) {
+        preloader.classList.add('loaded');
+        initAnimations();
+    }
+}, 5000);
