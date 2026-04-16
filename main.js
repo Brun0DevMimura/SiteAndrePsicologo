@@ -1,3 +1,17 @@
+// Preloader Handler - Registered at the very top for safety
+(function() {
+    const handleLoading = () => {
+        const preloader = document.getElementById('preloader');
+        if (preloader && !preloader.classList.contains('loaded')) {
+            preloader.classList.add('loaded');
+            if (typeof initAnimations === 'function') initAnimations();
+        }
+    };
+
+    window.addEventListener('load', () => setTimeout(handleLoading, 1200));
+    setTimeout(handleLoading, 5000); // 5s Fallback
+})();
+
 // Mobile Menu Toggle
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
@@ -66,8 +80,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
  * Intersection Observer for scroll animations
  */
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.01,
+    rootMargin: '0px 0px -20px 0px'
 };
 
 const observer = new IntersectionObserver((entries) => {
@@ -75,7 +89,6 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.classList.add('appear');
         } else {
-            // Remove appear class when it leaves the viewport (making it cyclic)
             entry.target.classList.remove('appear');
         }
     });
@@ -84,13 +97,6 @@ const observer = new IntersectionObserver((entries) => {
 function initAnimations() {
     const elements = document.querySelectorAll('.fade-in, .gallery-item, .hero-title');
     elements.forEach(el => observer.observe(el));
-
-    // Fallback: If after 3 seconds some elements aren't visible, show them
-    setTimeout(() => {
-        document.querySelectorAll('.fade-in, .gallery-item, .hero-title').forEach(el => {
-            el.classList.add('appear');
-        });
-    }, 3000);
 }
 
 // Scroll Handling
@@ -182,7 +188,6 @@ function initAutoScrollSpecialists() {
     if (!slider) return;
 
     let isHovering = false;
-    let scrollDirection = 1;
 
     slider.addEventListener('mouseenter', () => isHovering = true);
     slider.addEventListener('mouseleave', () => isHovering = false);
@@ -191,10 +196,10 @@ function initAutoScrollSpecialists() {
 
     setInterval(() => {
         if (isHovering) return;
-
         const maxScroll = slider.scrollWidth - slider.clientWidth;
-        const cardWidth = slider.querySelector('.specialist-card').offsetWidth + 16; // width + gap
-        
+        const firstCard = slider.querySelector('.specialist-card');
+        if (!firstCard) return;
+        const cardWidth = firstCard.offsetWidth + 16;
         if (slider.scrollLeft >= maxScroll - 10) {
             slider.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
@@ -208,25 +213,3 @@ document.addEventListener('DOMContentLoaded', () => {
     initKineticTypography();
     initAutoScrollSpecialists();
 });
-
-// Preloader Handler
-window.addEventListener('load', () => {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        // Delay slightly for visual effect
-        setTimeout(() => {
-            preloader.classList.add('loaded');
-            // Allow animations to start after preloader is gone
-            initAnimations();
-        }, 1200);
-    }
-});
-
-// Fallback: ensure things show up if load event takes too long
-setTimeout(() => {
-    const preloader = document.getElementById('preloader');
-    if (preloader && !preloader.classList.contains('loaded')) {
-        preloader.classList.add('loaded');
-        initAnimations();
-    }
-}, 5000);
