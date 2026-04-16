@@ -81,47 +81,49 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+            entry.target.classList.add('appear');
+            // Once it appears, stop observing
+            observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
 
-document.querySelectorAll('.fade-in').forEach(el => {
-    el.style.opacity = '0';
+document.querySelectorAll('.fade-in, .gallery-item').forEach(el => {
     observer.observe(el);
 });
 
-// Navbar scroll effect
-let lastScroll = 0;
+// Scroll Progress and Navbar State
 const navbar = document.querySelector('.navbar');
+const scrollProgress = document.getElementById('scrollProgress');
+let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (window.pageYOffset / totalHeight) * 100;
+    
+    if (scrollProgress) {
+        scrollProgress.style.width = `${progress}%`;
+    }
+
     const currentScroll = window.pageYOffset;
 
-    if (currentScroll > 100) {
-        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
-        navbar.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.4)';
+    if (currentScroll > 50) {
+        navbar.classList.add('scrolled');
     } else {
-        navbar.style.background = 'rgba(10, 10, 10, 0.8)';
-        navbar.style.boxShadow = 'none';
+        navbar.classList.remove('scrolled');
     }
 
     lastScroll = currentScroll;
+
+    // Parallax Hero
+    const heroContent = document.querySelector('.hero-content');
+    if (heroContent) {
+        heroContent.style.transform = `translateY(${currentScroll * 0.4}px)`;
+        heroContent.style.opacity = 1 - (currentScroll / 700);
+    }
 });
 
-// Lógica do Carrossel Hero
-const carouselItems = document.querySelectorAll('.carousel-item');
-let currentImageIndex = 0;
 
-function rotateCarousel() {
-    if (carouselItems.length <= 1) return;
-    carouselItems[currentImageIndex].classList.remove('active');
-    currentImageIndex = (currentImageIndex + 1) % carouselItems.length;
-    carouselItems[currentImageIndex].classList.add('active');
-}
-
-setInterval(rotateCarousel, 4000); // Troca a imagem a cada 4 segundos
 
 // Lógica do Modal de Especialistas
 const specialistCards = document.querySelectorAll('.specialist-card');
