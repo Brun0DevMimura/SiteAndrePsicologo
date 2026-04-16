@@ -91,13 +91,22 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Adicionando a imagem de fundo com um overlay para legibilidade */
-  background-image: linear-gradient(rgba(255, 255, 255, 0.80), rgba(255, 255, 255, 1.0)), url('./img/LogoEstruturaMente.jpeg');
+  /* Fallback color */
+  background-color: var(--color-bg-primary);
+}
+
+.bg-parallax {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 1.0)), url('./img/LogoEstruturaMente.jpeg');
   background-size: cover;
   background-position: center center;
-  background-attachment: fixed;
-  /* Mantém a imagem fixa durante o scroll */
-  background-repeat: no-repeat;
+  transform: scale(1);
+  will-change: transform;
 }
 
 h1,
@@ -483,12 +492,37 @@ img {
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: var(--spacing-md);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.hero-title span.char {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+  text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.appear .hero-title span.char,
+.hero-title.appear span.char {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.hero-content h2 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--spacing-sm);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .hero-title .highlight {
+  display: inline-flex;
   color: var(--color-primary);
   position: relative;
-  display: inline-block;
 }
 
 .hero-description {
@@ -496,6 +530,7 @@ img {
   color: var(--color-text-secondary);
   line-height: 1.6;
   max-width: 540px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .hero-ctas {
@@ -531,6 +566,30 @@ img {
   background: var(--color-primary-dark);
   transform: translateY(-3px);
   box-shadow: var(--shadow-glow);
+}
+
+/* Experimental Mask Animation */
+.btn-animate-mask {
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,1) 40%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,1) 60%);
+  mask-image: linear-gradient(-75deg, rgba(0,0,0,1) 40%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,1) 60%);
+  -webkit-mask-size: 300%;
+  mask-size: 300%;
+  -webkit-mask-position: 150%;
+  mask-position: 150%;
+  animation: mask-shimmer 3s infinite;
+}
+
+@keyframes mask-shimmer {
+  0% {
+    -webkit-mask-position: 150%;
+    mask-position: 150%;
+  }
+  100% {
+    -webkit-mask-position: -50%;
+    mask-position: -50%;
+  }
 }
 
 .btn-outline {
@@ -612,6 +671,7 @@ img {
   font-weight: 600;
   margin-bottom: var(--spacing-sm);
   color: var(--color-text-primary);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
 }
 
 .card-description {
@@ -947,6 +1007,7 @@ img {
 .section-title {
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: var(--spacing-md);
+  text-shadow: 1px 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .section-description {
@@ -1127,6 +1188,7 @@ img {
   font-weight: 600;
   color: var(--color-text-primary);
   margin-bottom: var(--spacing-xs);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .specialist-title {

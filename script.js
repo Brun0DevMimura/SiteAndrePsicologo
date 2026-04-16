@@ -115,6 +115,14 @@ window.addEventListener('scroll', () => {
 
     lastScroll = currentScroll;
 
+    // Background Zoom Parallax
+    const bgParallax = document.querySelector('.bg-parallax');
+    if (bgParallax) {
+        // Zooms from 1 to 1.2 over 5000px of scroll
+        const scale = 1 + (currentScroll / 5000);
+        bgParallax.style.transform = `scale(${scale})`;
+    }
+
     // Parallax Hero
     const heroContent = document.querySelector('.hero-content');
     if (heroContent) {
