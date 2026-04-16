@@ -101,6 +101,7 @@ function initAnimations() {
 
 // Scroll Handling
 const navbar = document.querySelector('.navbar');
+const logoImage = document.querySelector('.logo-image');
 const scrollProgress = document.getElementById('scrollProgress');
 const bgParallax = document.querySelector('.bg-parallax');
 const heroContent = document.querySelector('.hero-content');
@@ -114,6 +115,13 @@ window.addEventListener('scroll', () => {
     if (navbar) {
         if (currentScroll > 50) navbar.classList.add('scrolled');
         else navbar.classList.remove('scrolled');
+    }
+
+    if (logoImage) {
+        // Rotate logo based on scroll percentage (720 degrees total)
+        // This ensures it returns to 0 degrees at the very bottom
+        const rotation = (currentScroll / totalHeight) * 720; 
+        logoImage.style.transform = `rotate(${rotation}deg)`;
     }
 
     if (bgParallax) {
@@ -208,8 +216,104 @@ function initAutoScrollSpecialists() {
     }, 4000);
 }
 
+/**
+ * Lightbox Gallery
+ */
+function initLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const prevBtn = document.querySelector('.lightbox-prev');
+    const nextBtn = document.querySelector('.lightbox-next');
+
+    let currentIndex = 0;
+    const images = Array.from(galleryItems).map(item => ({
+        src: item.querySelector('img').src,
+        caption: item.querySelector('.gallery-overlay span').textContent
+    }));
+
+    function showImage(index) {
+        if (index < 0) index = images.length - 1;
+        if (index >= images.length) index = 0;
+        currentIndex = index;
+        
+        lightboxImg.src = images[currentIndex].src;
+        lightboxCaption.textContent = images[currentIndex].caption;
+    }
+
+    galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            showImage(index);
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    closeBtn.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showImage(currentIndex - 1);
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showImage(currentIndex + 1);
+    });
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeBtn.click();
+        if (e.key === 'ArrowLeft') prevBtn.click();
+        if (e.key === 'ArrowRight') nextBtn.click();
+    });
+}
+
+// Typewriter Effect
+function initTypewriter() {
+    const typewriterElements = document.querySelectorAll('.typewriter');
+    
+    const typeObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const text = el.getAttribute('data-text');
+                let i = 0;
+                el.innerHTML = '';
+                
+                function type() {
+                    if (i < text.length) {
+                        el.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(type, 100);
+                    }
+                }
+                type();
+                typeObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    typewriterElements.forEach(el => typeObserver.observe(el));
+}
+
 // Initial Run
 document.addEventListener('DOMContentLoaded', () => {
     initKineticTypography();
     initAutoScrollSpecialists();
+    initLightbox();
+    initTypewriter();
 });
