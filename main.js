@@ -101,7 +101,7 @@ function initAnimations() {
 
 // Scroll Handling
 const navbar = document.querySelector('.navbar');
-const logoImage = document.querySelector('.logo-image');
+const logos = document.querySelectorAll('.logo-image');
 const scrollProgress = document.getElementById('scrollProgress');
 const bgParallax = document.querySelector('.bg-parallax');
 const heroContent = document.querySelector('.hero-content');
@@ -117,11 +117,11 @@ window.addEventListener('scroll', () => {
         else navbar.classList.remove('scrolled');
     }
 
-    if (logoImage) {
-        // Rotate logo based on scroll percentage (720 degrees total)
-        // This ensures it returns to 0 degrees at the very bottom
-        const rotation = (currentScroll / totalHeight) * 720; 
-        logoImage.style.transform = `rotate(${rotation}deg)`;
+    if (logos.length > 0 && totalHeight > 0) {
+        const rotation = (currentScroll / totalHeight) * 720;
+        logos.forEach(logo => {
+            logo.style.transform = `rotate(${rotation}deg)`;
+        });
     }
 
     if (bgParallax) {
