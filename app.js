@@ -119,8 +119,10 @@ window.addEventListener('scroll', () => {
     }
 
     // Logo Rotation via CSS Variable
-    const rotation = (currentScroll / totalHeight) * 720;
-    document.documentElement.style.setProperty('--logo-rotate', `${rotation}deg`);
+    if (totalHeight > 0) {
+        const rotation = (currentScroll / totalHeight) * 720;
+        document.documentElement.style.setProperty('--logo-rotate', `${rotation}deg`);
+    }
 
     if (bgParallax) {
         const scale = 1 + (currentScroll / 5000);

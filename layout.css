@@ -1616,17 +1616,30 @@ img {
   align-items: center;
   gap: 8px;
   transition: var(--transition-base);
-  background: linear-gradient(90deg, var(--color-primary) 0%, #fff 50%, var(--color-primary) 100%);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent; /* Fallback for older browsers */
-  -webkit-text-fill-color: transparent;
-  animation: text-shimmer 3s infinite linear;
+  position: relative;
+  overflow: hidden;
+}
+
+/* New, more compatible shimmer */
+.btn-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  transition: 0.5s;
+  animation: light-slide 3s infinite;
+}
+
+@keyframes light-slide {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
 .btn-text i {
-  -webkit-text-fill-color: var(--color-primary);
+  color: var(--color-primary);
   animation: arrow-bounce 1s infinite alternate ease-in-out;
 }
 
