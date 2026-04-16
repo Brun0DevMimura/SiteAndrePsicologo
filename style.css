@@ -372,6 +372,7 @@ img {
   border-radius: var(--radius-full);
   object-fit: cover;
   will-change: transform;
+  transform: rotate(var(--logo-rotate, 0deg));
 }
 
 .nav-links {
@@ -1286,16 +1287,34 @@ img {
   font-weight: 500;
 }
 
-.specialist-bio {
+.specialist-more {
+  margin-top: var(--spacing-md);
+  color: var(--color-primary);
+  font-weight: 600;
   font-size: 0.9rem;
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition-base);
+}
+
+.specialist-more i {
+  transition: transform 0.3s ease;
+}
+
+.specialist-card:hover .specialist-more {
+  color: var(--color-primary-dark);
+}
+
+.specialist-card:hover .specialist-more i {
+  transform: translateX(4px);
 }
 
 .specialist-card {
   cursor: pointer;
   transition: var(--transition-base);
+  display: flex;
+  flex-direction: column;
 }
 
 .specialist-card:hover {
@@ -2164,6 +2183,90 @@ img {
 .lightbox-close { top: 30px; right: 30px; }
 .lightbox-prev { left: 30px; top: 50%; transform: translateY(-50%); }
 .lightbox-next { right: 30px; top: 50%; transform: translateY(-50%); }
+
+/* Modal Injected Styles */
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition: var(--transition-base);
+}
+.modal-close:hover { color: var(--color-primary); }
+
+.modal-profile {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-primary);
+}
+
+.modal-info h3 { margin: 0; font-size: 1.5rem; color: var(--color-text-primary); }
+.modal-profession { color: var(--color-primary); font-weight: 600; margin: 4px 0; }
+.modal-crp { font-size: 0.85rem; color: var(--color-text-tertiary); }
+
+.modal-description {
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-bottom: 25px;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.instagram-link-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 18px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white !important;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition-base);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.instagram-link-icon i {
+    font-size: 1.3rem;
+}
+
+.instagram-link-icon:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 15px rgba(220, 39, 67, 0.4);
+}
+
+.btn-whatsapp-modal {
+    background: #25d366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-base);
+}
+
+.btn-whatsapp-modal:hover { background: #128c7e; transform: translateY(-2px); }
+
+@media (max-width: 480px) {
+    .modal-profile { flex-direction: column; text-align: center; }
+}
 
 @media (max-width: 768px) {
   .lightbox-prev { left: 10px; }

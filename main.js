@@ -117,11 +117,9 @@ window.addEventListener('scroll', () => {
         else navbar.classList.remove('scrolled');
     }
 
-    if (logos.length > 0 && totalHeight > 0) {
+    if (totalHeight > 0) {
         const rotation = (currentScroll / totalHeight) * 720;
-        logos.forEach(logo => {
-            logo.style.transform = `rotate(${rotation}deg)`;
-        });
+        document.documentElement.style.setProperty('--logo-rotate', `${rotation}deg`);
     }
 
     if (bgParallax) {
@@ -312,10 +310,84 @@ function initTypewriter() {
     typewriterElements.forEach(el => typeObserver.observe(el));
 }
 
+/**
+ * Specialist Modal
+ */
+function initSpecialistModal() {
+    const modal = document.getElementById('specialistModalOverlay');
+    const modalContent = document.getElementById('specialistModalContent');
+    const cards = document.querySelectorAll('.specialist-card');
+
+    if (!modal || !modalContent) return;
+
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            const data = {
+                photo: card.getAttribute('data-photo'),
+                name: card.getAttribute('data-name'),
+                title: card.getAttribute('data-title'),
+                crp: card.getAttribute('data-crp'),
+                instagram: card.getAttribute('data-instagram'),
+                bio: card.getAttribute('data-bio')
+            };
+
+            modalContent.innerHTML = `
+                <div class="modal-close" id="closeModal">&times;</div>
+                <div class="modal-body">
+                    <div class="modal-profile">
+                        <img src="${data.photo}" alt="${data.name}" class="modal-photo">
+                        <div class="modal-info">
+                            <h3>${data.name}</h3>
+                            <p class="modal-profession">${data.title}</p>
+                            ${data.crp ? `<p class="modal-crp">${data.crp}</p>` : ''}
+                        </div>
+                    </div>
+                    <div class="modal-description">
+                        <p>${data.bio}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="${data.instagram}" target="_blank" class="instagram-link-icon" title="Ver Instagram">
+                            <i class="fi fi-brands-instagram"></i>
+                            <span>Me segue lá</span>
+                        </a>
+                        <a href="https://wa.me/5511932650519?text=Olá! Gostaria de falar com ${data.name}." class="btn-whatsapp-modal">
+                            Agendar com ${data.name.split(' ')[0]}
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Close logic
+            document.getElementById('closeModal').addEventListener('click', () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
 // Initial Run
 document.addEventListener('DOMContentLoaded', () => {
     initKineticTypography();
     initAutoScrollSpecialists();
     initLightbox();
     initTypewriter();
+    initSpecialistModal();
 });
