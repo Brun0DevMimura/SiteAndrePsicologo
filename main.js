@@ -290,22 +290,24 @@ function initTypewriter() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const el = entry.target;
-                const text = el.getAttribute('data-text');
+                const text = el.getAttribute('data-text') || el.innerText;
                 let i = 0;
+                
+                // Clear existing text and start typing
                 el.innerHTML = '';
                 
                 function type() {
                     if (i < text.length) {
                         el.innerHTML += text.charAt(i);
                         i++;
-                        setTimeout(type, 100);
+                        setTimeout(type, 80);
                     }
                 }
                 type();
                 typeObserver.unobserve(el);
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.1 }); // More sensitive threshold
 
     typewriterElements.forEach(el => typeObserver.observe(el));
 }
